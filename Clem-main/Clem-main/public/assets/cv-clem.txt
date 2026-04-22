@@ -1,0 +1,19 @@
+CV - Clem
+
+Profil
+- Developpeur full-stack oriente frontend moderne (React, Tailwind, Vite)
+- Interet fort pour la performance, la lisibilite et l experience utilisateur
+
+Competences
+- React, JavaScript, Tailwind CSS, Node.js
+- Python, C++, Git
+
+Projets
+- Portfolio one-page dev + gaming
+- Integration de presence Discord en temps reel via Lanyard
+- Landing communautaire Crystal
+
+Contact
+- Discord: https://discord.gg/evhpge7UCE
+- Instagram: https://www.instagram.com/clem94_220
+- Steam: https://steamcommunity.com/id/947616406464/

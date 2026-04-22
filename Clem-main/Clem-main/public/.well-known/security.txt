@@ -1,0 +1,7 @@
+# Security Policy — Clem Portfolio
+# RFC 9116 — https://securitytxt.org/
+
+Contact: https://discord.gg/evhpge7UCE
+Preferred-Languages: fr, en
+Canonical: https://clem.dev/.well-known/security.txt
+Expires: 2027-12-31T23:59:59.000Z
