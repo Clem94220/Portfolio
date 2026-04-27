@@ -132,9 +132,9 @@ export default function AnimatedBackground() {
                         
                         if (dist < connectionDistance) {
                             ctx.beginPath();
-                            // Modification 1: Couleur plus lumineuse pour faire ressortir le bleu
-                            ctx.strokeStyle = `rgba(64, 144, 255, ${0.9 * (1 - dist / connectionDistance)})`;
-                            ctx.lineWidth = 1.5; // Plus épais et plus lumineux
+                            // Lignes fines et élégantes, bleu subtil
+                            ctx.strokeStyle = `rgba(46, 107, 214, ${0.35 * (1 - dist / connectionDistance)})`;
+                            ctx.lineWidth = 1.0;
                             ctx.moveTo(p.x, p.y);
                             ctx.lineTo(p2.x, p2.y);
                             ctx.stroke();
@@ -231,8 +231,8 @@ export default function AnimatedBackground() {
                                 position: 'fixed',
                                 top: '5%',
                                 left: '-5%',
-                                background: `radial-gradient(circle, rgba(31, 76, 143, 0.25) 0%, transparent 65%)`,
-                                filter: 'blur(80px)',
+                                background: `radial-gradient(circle, rgba(31, 76, 143, 0.12) 0%, transparent 65%)`,
+                                filter: 'blur(90px)',
                             }}
                         />
                     </motion.div>
@@ -244,8 +244,8 @@ export default function AnimatedBackground() {
                                 position: 'fixed',
                                 top: '60%',
                                 right: '-10%',
-                                background: `radial-gradient(circle, rgba(46, 107, 214, 0.2) 0%, transparent 65%)`,
-                                filter: 'blur(70px)',
+                                background: `radial-gradient(circle, rgba(46, 107, 214, 0.08) 0%, transparent 65%)`,
+                                filter: 'blur(90px)',
                             }}
                         />
                     </motion.div>
