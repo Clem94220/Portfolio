@@ -13,9 +13,8 @@ export default function AnimatedBackground() {
     const mouseRef = useRef({ x: -1, y: -1, vx: 0, vy: 0 });
     const lastMouseRef = useRef({ x: -1, y: -1 });
 
-    const reducedMotion =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Forcer à false pour ignorer le réglage OS (ex: Windows optimisé) et toujours afficher les particules
+    const reducedMotion = false;
     const isTouch =
         typeof window !== 'undefined' &&
         window.matchMedia('(hover: none) and (pointer: coarse)').matches;
