@@ -132,9 +132,9 @@ export default function AnimatedBackground() {
                         
                         if (dist < connectionDistance) {
                             ctx.beginPath();
-                            // Modification 1: Couleur plus profonde et opacité augmentée pour un meilleur contraste
-                            ctx.strokeStyle = `rgba(0, 51, 102, ${0.8 * (1 - dist / connectionDistance)})`;
-                            ctx.lineWidth = 1.2; // Légèrement plus épais pour mieux voir
+                            // Modification 1: Couleur plus lumineuse pour faire ressortir le bleu
+                            ctx.strokeStyle = `rgba(64, 144, 255, ${0.9 * (1 - dist / connectionDistance)})`;
+                            ctx.lineWidth = 1.5; // Plus épais et plus lumineux
                             ctx.moveTo(p.x, p.y);
                             ctx.lineTo(p2.x, p2.y);
                             ctx.stroke();
