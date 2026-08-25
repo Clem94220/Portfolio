@@ -8,19 +8,15 @@ echo ===================================================
 echo.
 
 echo Target Remote: https://github.com/Clem94220/Portfolio.git
-echo Branch: main
-echo.
-echo Pushing commits to GitHub...
-echo (A browser window or credential popup may open to sign in)
+echo Pushing latest commits to main and master branches...
 echo.
 
-"C:\Program Files\Git\cmd\git.exe" push -u origin main
+"C:\Program Files\Git\cmd\git.exe" push origin main:main
+"C:\Program Files\Git\cmd\git.exe" push origin main:master --force
 
 if %errorlevel% neq 0 (
     echo.
-    echo [ERROR] Push failed. If the remote repository already contains files,
-    echo you may need to force push or pull first:
-    echo "C:\Program Files\Git\cmd\git.exe" push -u origin main --force
+    echo [ERROR] Push failed. Please check your internet connection or credentials.
     echo.
 ) else (
     echo.
