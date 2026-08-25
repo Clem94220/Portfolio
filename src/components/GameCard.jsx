@@ -1,0 +1,26 @@
+import { motion } from 'framer-motion';
+
+export default function GameCard({ icon: Icon, logoUrl, name, stat, color = 'var(--accent)' }) {
+    return (
+        <motion.div whileHover={{ y: -4, scale: 1.02 }} className="crystal-card p-5 group relative overflow-hidden">
+            <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-2">
+                    {logoUrl ? (
+                        <img
+                            src={logoUrl}
+                            alt={name}
+                            className="w-8 h-8 object-contain flex-shrink-0 transition-all group-hover:drop-shadow-[0_0_8px_var(--accent-glow)]"
+                        />
+                    ) : Icon ? (
+                        <Icon
+                            className="text-2xl flex-shrink-0 transition-all group-hover:drop-shadow-[0_0_8px_var(--accent-glow)]"
+                            style={{ color }}
+                        />
+                    ) : null}
+                    <h4 className="text-txt-primary font-semibold text-base">{name}</h4>
+                </div>
+                {stat && <p className="text-txt-secondary text-sm">{stat}</p>}
+            </div>
+        </motion.div>
+    );
+}
