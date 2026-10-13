@@ -154,9 +154,9 @@ export const PAYMENT_METHODS = {
         {
             key: 'paypal',
             name: 'PayPal',
-            value: 'paypal.me/clem942',
+            value: 'paypal.me/LightDark23',
             copyValue: null,
-            link: 'https://www.paypal.me/clem942',
+            link: 'https://www.paypal.me/LightDark23',
         },
     ],
     crypto: [

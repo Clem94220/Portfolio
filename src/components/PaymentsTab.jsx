@@ -21,7 +21,7 @@ const cardItem = {
 };
 
 const PAYPAL = [
-    { icon: SiPaypal, name: 'PayPal', value: 'paypal.me/clem942', copyValue: null, link: 'https://www.paypal.me/clem942', color: '#0079C1' },
+    { icon: SiPaypal, name: 'PayPal', value: 'paypal.me/LightDark23', copyValue: null, link: 'https://www.paypal.me/LightDark23', color: '#0079C1' },
 ];
 
 const CRYPTOS = [
