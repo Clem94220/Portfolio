@@ -58,7 +58,7 @@ export default function CrystalSection() {
     return (
         <div className="space-y-10">
             <SectionHeading
-                title="Crystal Solution"
+                title="Kronos Solution"
                 description={
                     language === 'en'
                         ? 'Custom software, gaming solutions, flexible pricing and accepted payment methods.'
@@ -74,12 +74,12 @@ export default function CrystalSection() {
                 viewport={{ once: true }}
                 className="crystal-card p-6 sm:p-8 relative overflow-hidden"
                 style={{
-                    boxShadow: '0 0 50px rgba(0, 240, 255, 0.03), 0 4px 30px rgba(0, 0, 0, 0.6)',
+                    boxShadow: '0 0 50px var(--accent-subtle), 0 4px 30px rgba(0, 0, 0, 0.6)',
                 }}
             >
                 <div
-                    className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl pointer-events-none opacity-20"
-                    style={{ background: 'radial-gradient(circle, #00f0ff, transparent)' }}
+                    className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl pointer-events-none opacity-25"
+                    style={{ background: 'radial-gradient(circle, var(--accent), transparent)' }}
                 />
 
                 <div className="relative z-10 space-y-6">
@@ -88,7 +88,7 @@ export default function CrystalSection() {
                             <div className="relative">
                                 <img
                                     src={CRYSTAL.icon}
-                                    alt="Crystal Solution"
+                                    alt="Kronos Solution"
                                     className="w-16 h-16 rounded-2xl object-cover ring-2 ring-white/10"
                                     loading="lazy"
                                     decoding="async"

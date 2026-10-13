@@ -137,12 +137,23 @@ export default function MusicPlayer() {
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.96 }}
                     onClick={() => setExpanded((state) => !state)}
-                    className="crystal-card w-10 h-10 flex items-center justify-center"
-                    style={{ borderColor: playing ? 'var(--border-highlight)' : 'var(--border-crystal)' }}
+                    className="crystal-card w-10 h-10 flex items-center justify-center transition-all"
+                    style={{
+                        borderColor: playing ? 'var(--accent)' : 'var(--border-crystal)',
+                        boxShadow: playing ? '0 0 12px var(--accent-glow)' : 'none'
+                    }}
                     title={t.common.musicPlayer}
                     aria-label={t.common.musicPlayer}
                 >
-                    {playing ? <FaPause className="text-[11px] text-txt-primary" /> : <FaPlay className="text-[11px] text-txt-secondary" />}
+                    {playing ? (
+                        <div className="flex items-end gap-[2.5px] h-3.5 w-3.5 justify-center" aria-hidden="true">
+                            <span className="w-[2.5px] rounded-full bg-[var(--accent)] animate-[soundbar-1_0.75s_ease-in-out_infinite]" />
+                            <span className="w-[2.5px] rounded-full bg-[var(--accent)] animate-[soundbar-2_0.6s_ease-in-out_infinite]" />
+                            <span className="w-[2.5px] rounded-full bg-[var(--accent)] animate-[soundbar-3_0.85s_ease-in-out_infinite]" />
+                        </div>
+                    ) : (
+                        <FaPlay className="text-[10px] text-txt-secondary ml-0.5" />
+                    )}
                 </motion.button>
 
                 <AnimatePresence>
@@ -206,6 +217,14 @@ export default function MusicPlayer() {
                                             background: `linear-gradient(to right, var(--accent) ${(muted ? 0 : volume) * 100}%, var(--border-crystal) ${(muted ? 0 : volume) * 100}%)`,
                                         }}
                                     />
+                                </div>
+
+                                <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-txt-muted">
+                                    <span>Contrôle rapide</span>
+                                    <span className="inline-flex items-center gap-1.5 text-txt-secondary">
+                                        <kbd className="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[9px] font-mono text-txt-primary">Espace</kbd>
+                                        <span>{playing ? 'Couper' : 'Relancer'}</span>
+                                    </span>
                                 </div>
                             </div>
                         </motion.div>

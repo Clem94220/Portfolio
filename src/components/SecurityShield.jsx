@@ -47,13 +47,7 @@ export default function SecurityShield() {
             subStyle
         );
 
-        // ── 3. Block right-click ──
-        const handleContextMenu = (e) => {
-            e.preventDefault();
-            return false;
-        };
-
-        // ── 4. Block keyboard shortcuts ──
+        // ── 3. Block devtools keyboard shortcuts ──
         const handleKeyDown = (e) => {
             // F12
             if (e.key === 'F12') {
@@ -62,46 +56,41 @@ export default function SecurityShield() {
             }
 
             // Ctrl+Shift+I (Inspector)
-            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
                 e.preventDefault();
                 return false;
             }
 
             // Ctrl+Shift+J (Console)
-            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
                 e.preventDefault();
                 return false;
             }
 
             // Ctrl+Shift+C (Element picker)
-            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
                 e.preventDefault();
                 return false;
             }
 
             // Ctrl+U (View source)
-            if (e.ctrlKey && e.key === 'u') {
+            if (e.ctrlKey && !e.shiftKey && (e.key === 'u' || e.key === 'U')) {
                 e.preventDefault();
                 return false;
             }
         };
 
-        // ── 5. Block drag on images ──
+        // ── 4. Block drag on images ──
         const handleDragStart = (e) => {
             if (e.target.tagName === 'IMG') {
                 e.preventDefault();
             }
         };
 
-        document.addEventListener('contextmenu', handleContextMenu);
         document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('dragstart', handleDragStart);
 
-        // Modification 3: Suppression de la prévention CSS de sélection de texte
-        // (Le bloc créant et injectant 'security-shield-styles' avec user-select: none a été supprimé)
-
         return () => {
-            document.removeEventListener('contextmenu', handleContextMenu);
             document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('dragstart', handleDragStart);
         };

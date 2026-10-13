@@ -45,7 +45,7 @@ export const translations = {
         nav: {
             home: 'Accueil',
             projects: 'Projets',
-            crystal: 'Crystal',
+            crystal: 'Kronos',
             about: 'Parcours',
             gaming: 'Gaming',
             community: 'Communauté',
@@ -56,7 +56,7 @@ export const translations = {
             title: 'Clem',
             subtitle: 'Développeur web passionné, entre code et gaming compétitif',
             identity: 'Je m\'appelle Clément, j\'ai 17 ans.',
-            studies: 'Je suis actuellement étudiant en L1 AES (Administration Économique et Sociale).',
+            studies: 'Je suis actuellement étudiant en L1 AEI (Administration et Échanges Internationaux) à l\'UPEC (International School).',
             location: 'France',
             availability: 'Ouvert aux collaborations et projets web',
             summary: 'J\'aime créer des interfaces simples, rapides et agréables à utiliser, avec du code propre et maintenable.',
@@ -77,7 +77,7 @@ export const translations = {
         },
         projects: [
             {
-                title: 'Crystal Solution',
+                title: 'Kronos Solution',
                 summary: 'Projet monté avec Aurélien. On y propose nos logiciels et on gère le support via la communauté.',
                 impact: 'Mise en place du serveur, de l\'offre et du support client au quotidien.',
                 actionLabel: 'Site Web',
@@ -185,7 +185,7 @@ export const translations = {
         },
         community: {
             headingTitle: 'Communauté',
-            headingDesc: 'Mon réseau, mes amis de dev et mes expériences passées en tant que staff.',
+            headingDesc: 'Mon parcours communautaire et mes expériences passées en tant que staff.',
             staffServers: 'Expériences Staff (Passées)',
             staffServersNote: 'Serveurs Discord où j\'ai exercé en tant que staff & modérateur par le passé.',
             pastStaffRole: 'Ancien Staff',
@@ -193,8 +193,8 @@ export const translations = {
             members: [
                 {
                     name: 'Aurélien',
-                    role: 'Développeur Logiciel - C, C++, C# (Co-fondateur - Crystal Solution)',
-                    badges: ['Co-fondateur Crystal Solution'],
+                    role: 'Développeur Logiciel - C, C++, C# (Co-fondateur - Kronos Solution)',
+                    badges: ['Co-fondateur Kronos Solution'],
                 },
                 {
                     name: 'Vardox',
@@ -278,7 +278,7 @@ export const translations = {
         nav: {
             home: 'Home',
             projects: 'Projects',
-            crystal: 'Crystal',
+            crystal: 'Kronos',
             about: 'Timeline',
             gaming: 'Gaming',
             community: 'Community',
@@ -289,7 +289,7 @@ export const translations = {
             title: 'Clem',
             subtitle: 'Passionate web developer, between coding and competitive gaming',
             identity: 'My name is Clement, I am 17 years old.',
-            studies: 'I am currently a 1st year university student in AES (Economic and Social Administration).',
+            studies: 'I am currently a 1st year university student in AEI (Administration and International Exchanges / International School) at UPEC.',
             location: 'France',
             availability: 'Open to collaborations and web projects',
             summary: 'I love creating simple, fast, and pleasant interfaces to use, with clean and maintainable code.',
@@ -310,7 +310,7 @@ export const translations = {
         },
         projects: [
             {
-                title: 'Crystal Solution',
+                title: 'Kronos Solution',
                 summary: 'Project launched with Aurelien. We offer our software products and manage support via the community.',
                 impact: 'Setting up the server, the offer, and client support on a daily basis.',
                 actionLabel: 'Website',
@@ -418,7 +418,7 @@ export const translations = {
         },
         community: {
             headingTitle: 'Community',
-            headingDesc: 'My network, developer friends, and past staff experiences.',
+            headingDesc: 'My community background and past staff experiences across different servers.',
             staffServers: 'Past Staff Experiences',
             staffServersNote: 'Discord servers where I previously held staff and moderation roles.',
             pastStaffRole: 'Past Staff',
@@ -426,8 +426,8 @@ export const translations = {
             members: [
                 {
                     name: 'Aurelien',
-                    role: 'Software Developer - C, C++, C# (Co-Founder - Crystal Solution)',
-                    badges: ['Co-Founder - Crystal Solution'],
+                    role: 'Software Developer - C, C++, C# (Co-Founder - Kronos Solution)',
+                    badges: ['Co-Founder - Kronos Solution'],
                 },
                 {
                     name: 'Vardox',

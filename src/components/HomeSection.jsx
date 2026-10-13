@@ -85,16 +85,22 @@ export default function HomeSection({ lanyard, lanyard2 }) {
                 className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 items-start"
             >
                 <motion.div variants={item} className="space-y-6">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs uppercase tracking-wider text-txt-secondary">
-                        <span className="w-2 h-2 rounded-full bg-white/70" />
-                        {t.profile.badge}
+                    <div className="flex flex-wrap items-center gap-2">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs uppercase tracking-wider text-txt-secondary">
+                            <span className="w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent-glow)]" />
+                            {t.profile.badge}
+                        </div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent)]/30 bg-[var(--accent-subtle)] text-xs font-mono text-txt-primary">
+                            <span>🎓</span>
+                            <span>AEI International School • UPEC</span>
+                        </div>
                     </div>
 
                     <div className="space-y-4">
                         <div className="relative">
                             <div
                                 className="absolute -inset-x-8 -inset-y-4 opacity-20 blur-3xl pointer-events-none"
-                                style={{ background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.15), transparent 70%)' }}
+                                style={{ background: 'radial-gradient(ellipse at center, rgba(56,189,248,0.25), transparent 70%)' }}
                             />
                             <h1 className="relative text-4xl sm:text-6xl font-display font-bold tracking-tight silver-text-gradient">
                                 {t.profile.title}
@@ -128,11 +134,17 @@ export default function HomeSection({ lanyard, lanyard2 }) {
                     </div>
 
                     <div className="flex flex-wrap gap-2.5">
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
                             {t.profile.location}
                         </span>
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
                             {t.profile.availability}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-[var(--accent)]/30 bg-[var(--accent-subtle)] text-txt-primary font-mono">
+                            <span>⚡</span>
+                            <span>Kronos Solution Co-Founder</span>
                         </span>
                     </div>
 

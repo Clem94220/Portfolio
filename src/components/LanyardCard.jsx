@@ -195,10 +195,12 @@ export default function LanyardCard({ data, loading, error }) {
                             style={{ boxShadow: `0 0 14px ${status.glow}` }}
                         />
                         <span
-                            className="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2"
+                            className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 ${
+                                discord_status === 'online' ? 'animate-pulse' : ''
+                            }`}
                             style={{
                                 backgroundColor: status.color,
-                                boxShadow: `0 0 8px ${status.glow}`,
+                                boxShadow: `0 0 10px ${status.glow}`,
                                 borderColor: 'var(--bg-dark)',
                             }}
                         />
@@ -210,7 +212,18 @@ export default function LanyardCard({ data, loading, error }) {
                         </h3>
                         <p className="text-txt-muted text-sm font-mono truncate">@{discord_user.username}</p>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: status.color }} />
+                            <span className="relative flex h-2 w-2 items-center justify-center">
+                                {discord_status === 'online' && (
+                                    <span
+                                        className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                                        style={{ backgroundColor: status.color }}
+                                    />
+                                )}
+                                <span
+                                    className="relative inline-flex rounded-full h-1.5 w-1.5"
+                                    style={{ backgroundColor: status.color }}
+                                />
+                            </span>
                             <span className="text-xs text-txt-secondary">{status.label}</span>
                         </div>
                     </div>

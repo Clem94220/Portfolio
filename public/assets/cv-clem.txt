@@ -2,6 +2,7 @@ CV - Clem
 
 Profil
 - Developpeur full-stack oriente frontend moderne (React, Tailwind, Vite)
+- Etudiant en L1 AEI (Administration et Echanges Internationaux) a l UPEC (International School)
 - Interet fort pour la performance, la lisibilite et l experience utilisateur
 
 Competences
@@ -11,7 +12,7 @@ Competences
 Projets
 - Portfolio one-page dev + gaming
 - Integration de presence Discord en temps reel via Lanyard
-- Landing communautaire Crystal
+- Landing communautaire Kronos Solution
 
 Contact
 - Discord: https://discord.gg/evhpge7UCE

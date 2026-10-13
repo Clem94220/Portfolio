@@ -188,6 +188,18 @@ function MainApp() {
             );
             if (isInput) return;
 
+            // Touche Espace : coupe / relance la musique directement sans déplacer les menus ni scroller
+            if (event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar') {
+                event.preventDefault();
+                window.dispatchEvent(new CustomEvent('toggle-music'));
+                return;
+            }
+
+            // Ne JAMAIS intercepter les raccourcis système (ex: Ctrl+C ou Cmd+C pour copier)
+            if (event.ctrlKey || event.metaKey || event.altKey) {
+                return;
+            }
+
             const key = event.key.toLowerCase();
             if (key === 'm') {
                 event.preventDefault();

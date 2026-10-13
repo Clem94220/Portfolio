@@ -3,22 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaPalette } from 'react-icons/fa';
 
 const ACCENTS = {
-    white: { name: 'White', accent: '#ffffff', glow: 'rgba(255, 255, 255, 0.35)', subtle: 'rgba(255, 255, 255, 0.08)' },
+    skyblue: { name: 'Bleu Ciel', accent: '#38bdf8', glow: 'rgba(56, 189, 248, 0.45)', subtle: 'rgba(56, 189, 248, 0.1)' },
+    cyan: { name: 'Cyan Néon', accent: '#00f0ff', glow: 'rgba(0, 240, 255, 0.4)', subtle: 'rgba(0, 240, 255, 0.08)' },
+    blue: { name: 'Bleu Roi', accent: '#3b82f6', glow: 'rgba(59, 130, 246, 0.4)', subtle: 'rgba(59, 130, 246, 0.08)' },
+    purple: { name: 'Violet Néon', accent: '#b88dfa', glow: 'rgba(184, 141, 250, 0.35)', subtle: 'rgba(184, 141, 250, 0.08)' },
     red: { name: 'Valorant', accent: '#ff4655', glow: 'rgba(255, 70, 85, 0.35)', subtle: 'rgba(255, 70, 85, 0.08)' },
-    blue: { name: 'Fortnite', accent: '#00b4ff', glow: 'rgba(0, 180, 255, 0.35)', subtle: 'rgba(0, 180, 255, 0.08)' },
-    orange: { name: 'Overwatch', accent: '#ff981f', glow: 'rgba(255, 152, 31, 0.35)', subtle: 'rgba(255, 152, 31, 0.08)' },
-    purple: { name: 'Neon', accent: '#b88dfa', glow: 'rgba(184, 141, 250, 0.35)', subtle: 'rgba(184, 141, 250, 0.08)' }
+    white: { name: 'Blanc Cristal', accent: '#ffffff', glow: 'rgba(255, 255, 255, 0.35)', subtle: 'rgba(255, 255, 255, 0.08)' }
 };
 
 const ACCENT_KEYS = Object.keys(ACCENTS);
 
 export default function AccentSwitcher() {
-    const [activeColor, setActiveColor] = useState('white');
+    const [activeColor, setActiveColor] = useState('skyblue');
     const [expanded, setExpanded] = useState(false);
 
     // Apply color values to document element variables
     const applyColor = useCallback((key) => {
-        const theme = ACCENTS[key] || ACCENTS.white;
+        const theme = ACCENTS[key] || ACCENTS.skyblue;
         const root = document.documentElement;
         root.style.setProperty('--accent', theme.accent);
         root.style.setProperty('--accent-glow', theme.glow);
@@ -33,7 +34,7 @@ export default function AccentSwitcher() {
         if (saved && ACCENTS[saved]) {
             applyColor(saved);
         } else {
-            applyColor('white');
+            applyColor('skyblue');
         }
     }, [applyColor]);
 

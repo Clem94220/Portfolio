@@ -33,7 +33,7 @@ export const PROFILE = {
     title: 'Clem',
     subtitle: 'Developpeur web passionne, entre code et gaming competitif',
     identity: 'Je m appelle Clement, j ai 17 ans.',
-    studies: 'Je suis actuellement etudiant en L1 AES (Administration Economique et Sociale).',
+    studies: 'Je suis actuellement etudiant en L1 AEI (Administration et Echanges Internationaux) a l UPEC (International School).',
     location: 'France',
     availability: 'Ouvert aux collaborations et projets web',
     summary:
@@ -51,7 +51,7 @@ export const PROOF_LINKS = [
 export const PROJECTS = [
     {
         id: 'crystal',
-        title: 'Crystal Solution',
+        title: 'Kronos Solution',
         summary:
             'Projet monte avec Aurelien. On y propose nos logiciels et on gere le support via la communaute.',
         stack: ['Community', 'Software', 'Support'],
@@ -60,7 +60,7 @@ export const PROJECTS = [
         actionType: 'website',
         actionLabel: 'Website',
         actionUrl: 'https://crystal-solution.sellhub.cx/',
-        image: 'https://cdn.discordapp.com/icons/1312098874235813888/33067d0f3e2361db28d44d613d90a4b3.png?size=1024',
+        image: '/assets/logokronos.webp',
     },
     {
         id: 'rd_windows',
@@ -78,8 +78,8 @@ export const PROJECTS = [
 ];
 
 export const CRYSTAL = {
-    title: 'Crystal Solution',
-    icon: 'https://cdn.discordapp.com/icons/1312098874235813888/33067d0f3e2361db28d44d613d90a4b3.png?size=1024',
+    title: 'Kronos Solution',
+    icon: '/assets/logokronos.webp',
     description:
         'Projet cofonde avec Aurelien. On developpe nos propres logiciels et on accompagne les utilisateurs sur Discord.',
     shopUrl: 'https://crystal-solution.sellhub.cx/',
@@ -271,9 +271,9 @@ export const TEAM_FRIENDS = [
         name: 'Aurelien',
         handle: 'aurelien6707',
         avatar: 'https://cdn.discordapp.com/avatars/968376926064492595/8c1f3c9d63dd157ddd2273529b1a1df6.png?size=4096',
-        role: 'Software Developer - C, C++, C# (Co-Founder - Crystal Solution)',
+        role: 'Software Developer - C, C++, C# (Co-Founder - Kronos Solution)',
         skills: ['C', 'C++', 'C#', 'Systems', 'Optimization'],
-        badges: [{ label: 'Co-fondateur Crystal Solution' }],
+        badges: [{ label: 'Co-fondateur Kronos Solution' }],
     },
     {
         name: 'Vardox',

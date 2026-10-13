@@ -82,6 +82,9 @@ function ProjectCard({ project }) {
                         className="w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-300"
                         loading="lazy"
                         decoding="async"
+                        onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                        }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                 </div>

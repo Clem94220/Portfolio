@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
-import { STAFF_SERVERS, TEAM_FRIENDS } from '../data/portfolioData';
+import { STAFF_SERVERS } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
 import SectionHeading from './SectionHeading';
-import TeamCard from './TeamCard';
 
 const list = {
     hidden: { opacity: 0 },
@@ -16,23 +15,6 @@ const item = {
 
 export default function CommunitySection() {
     const { t } = useTranslation();
-
-    const translatedTeamFriends = TEAM_FRIENDS.map((member, index) => {
-        const trans = t.community.members ? t.community.members[index] : null;
-        if (!trans) return member;
-
-        const badges = member.badges ? member.badges.map((badge, badgeIndex) => ({
-            ...badge,
-            label: trans.badges && trans.badges[badgeIndex] ? trans.badges[badgeIndex] : badge.label
-        })) : [];
-
-        return {
-            ...member,
-            role: trans.role || member.role,
-            stats: trans.stats || member.stats,
-            badges
-        };
-    });
 
     return (
         <div className="space-y-10">
@@ -84,19 +66,6 @@ export default function CommunitySection() {
                         </motion.article>
                     ))}
                 </motion.div>
-            </div>
-
-            {/* Team / Friends */}
-            <div className="space-y-4">
-                <h3 className="text-xs uppercase tracking-[0.2em] font-display text-txt-secondary flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
-                    {t.community.teamFriends}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {translatedTeamFriends.map((member, index) => (
-                        <TeamCard key={member.handle} member={member} index={index} />
-                    ))}
-                </div>
             </div>
         </div>
     );
