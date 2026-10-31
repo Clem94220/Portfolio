@@ -12,6 +12,7 @@ import { useTranslation } from '../contexts/LanguageContext';
 import LinkIcon from './LinkIcon';
 import LanyardCard from './LanyardCard';
 import SkillBadge from './SkillBadge';
+import DiscordJoinCard from './DiscordJoinCard';
 
 const container = {
     hidden: { opacity: 0 },
@@ -131,6 +132,10 @@ export default function HomeSection({ lanyard, lanyard2 }) {
                         <p className="text-sm sm:text-base text-txt-muted max-w-2xl leading-relaxed">
                             {t.profile.summary}
                         </p>
+                    </div>
+
+                    <div className="max-w-md">
+                        <DiscordJoinCard />
                     </div>
 
                     <div className="flex flex-wrap gap-2.5">

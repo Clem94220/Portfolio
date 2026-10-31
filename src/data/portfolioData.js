@@ -32,7 +32,7 @@
 export const PROFILE = {
     title: 'Clem',
     subtitle: 'Developpeur web passionne, entre code et gaming competitif',
-    identity: 'Je m appelle Clement, j ai 17 ans.',
+    identity: 'Je m appelle Clement, j ai 18 ans.',
     studies: 'Je suis actuellement etudiant en L1 AEI (Administration et Echanges Internationaux) a l UPEC (International School).',
     location: 'France',
     availability: 'Ouvert aux collaborations et projets web',
@@ -105,6 +105,13 @@ export const CRYSTAL_FEATURES = [
         description:
             'Des produits prives disponibles sur la boutique, avec suivi et support.',
     },
+];
+
+export const CRYSTAL_SCREENSHOTS = [
+    { src: '/assets/kronos-loader-1.webp', fr: 'Connexion avec clé de licence', en: 'License key sign-in' },
+    { src: '/assets/kronos-loader-2.webp', fr: 'Accueil et infos système', en: 'Home and system info' },
+    { src: '/assets/kronos-loader-3.webp', fr: 'Choix du jeu', en: 'Game selection' },
+    { src: '/assets/kronos-loader-4.webp', fr: 'Modules personnalisés', en: 'Custom modules' },
 ];
 
 export const CRYSTAL_DURATIONS = ['1 day', '1 week', '1 month', 'lifetime'];
@@ -299,4 +306,17 @@ export const TEAM_FRIENDS = [
         skills: ['Fortnite', 'Sea of Thieves', 'CRT Trading', 'Strategy', 'Analytics'],
         badges: [],
     },
+];
+
+export const DISCORD_INVITE_CODE = 'evhpge7UCE';
+export const DISCORD_TICKET_URL = 'https://discord.com/channels/1312098874235813888/1472372111883632791';
+export const DISCORD_DM_URL = 'https://discord.com/users/1145418060010901636';
+
+export const CRYSTAL_VOUCHES = [
+    { src: '/assets/vouch-1.webp' },
+    { src: '/assets/vouch-2.webp' },
+    { src: '/assets/vouch-3.webp' },
+    { src: '/assets/vouch-4.webp' },
+    { src: '/assets/vouch-5.webp' },
+    { src: '/assets/vouch-6.webp' },
 ];

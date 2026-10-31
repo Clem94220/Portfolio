@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, Suspense, lazy } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import AnimatedBackground from './components/AnimatedBackground';
 import TabNav from './components/TabNav';
 import NeonHud from './components/NeonHud';
@@ -188,6 +188,10 @@ function MainApp() {
             );
             if (isInput) return;
 
+            // Laisse Espace/Entrée activer normalement les boutons, liens et listes (accessibilité clavier)
+            const isInteractive = activeEl && activeEl.closest && activeEl.closest('button, a, select, [role="button"]');
+            if (isInteractive && (event.code === 'Space' || event.key === ' ')) return;
+
             // Touche Espace : coupe / relance la musique directement sans déplacer les menus ni scroller
             if (event.code === 'Space' || event.key === ' ' || event.key === 'Spacebar') {
                 event.preventDefault();
@@ -207,7 +211,7 @@ function MainApp() {
             } else if (key === 'c') {
                 event.preventDefault();
                 window.dispatchEvent(new CustomEvent('cycle-accent'));
-            } else if (key === 'l') {
+            } else if (key === 'l' && language !== null) {
                 event.preventDefault();
                 setLanguage(language === 'fr' ? 'en' : 'fr');
             }
@@ -224,6 +228,10 @@ function MainApp() {
                     <LanguageSelector onSelect={setLanguage} />
                 )}
             </AnimatePresence>
+
+            <a href="#main" className="skip-link">
+                {language === 'en' ? 'Skip to content' : 'Aller au contenu'}
+            </a>
 
             <PageLoader />
             <SecurityShield />
@@ -242,7 +250,7 @@ function MainApp() {
                 </div>
             </header>
 
-            <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-14">
+            <main id="main" className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-14">
                 <ScrollReveal id="home">
                     <HomeSection lanyard={lanyard} lanyard2={lanyard2} />
                 </ScrollReveal>
@@ -304,7 +312,9 @@ function MainApp() {
 export default function App() {
     return (
         <LanguageProvider>
-            <MainApp />
+            <MotionConfig reducedMotion="user">
+                <MainApp />
+            </MotionConfig>
         </LanguageProvider>
     );
 }

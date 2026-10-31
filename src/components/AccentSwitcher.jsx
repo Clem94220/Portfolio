@@ -24,13 +24,22 @@ export default function AccentSwitcher() {
         root.style.setProperty('--accent', theme.accent);
         root.style.setProperty('--accent-glow', theme.glow);
         root.style.setProperty('--accent-subtle', theme.subtle);
-        localStorage.setItem('accent_color', key);
+        try {
+            localStorage.setItem('accent_color', key);
+        } catch {
+            // stockage bloqué : la couleur s'applique quand même
+        }
         setActiveColor(key);
     }, []);
 
     // Load active theme color from localStorage on mount
     useEffect(() => {
-        const saved = localStorage.getItem('accent_color');
+        let saved = null;
+        try {
+            saved = localStorage.getItem('accent_color');
+        } catch {
+            saved = null;
+        }
         if (saved && ACCENTS[saved]) {
             applyColor(saved);
         } else {
@@ -41,17 +50,12 @@ export default function AccentSwitcher() {
     // Listen to cycle-accent custom events for keyboard shortcut mapping
     useEffect(() => {
         const handleCycle = () => {
-            setActiveColor((prev) => {
-                const currentIndex = ACCENT_KEYS.indexOf(prev);
-                const nextIndex = (currentIndex + 1) % ACCENT_KEYS.length;
-                const nextKey = ACCENT_KEYS[nextIndex];
-                applyColor(nextKey);
-                return nextKey;
-            });
+            const currentIndex = ACCENT_KEYS.indexOf(activeColor);
+            applyColor(ACCENT_KEYS[(currentIndex + 1) % ACCENT_KEYS.length]);
         };
         window.addEventListener('cycle-accent', handleCycle);
         return () => window.removeEventListener('cycle-accent', handleCycle);
-    }, [applyColor]);
+    }, [activeColor, applyColor]);
 
     return (
         <div className="fixed bottom-4 left-16 z-50 flex items-center gap-2">

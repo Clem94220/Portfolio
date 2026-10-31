@@ -34,3 +34,5 @@ Disallow: /
 
 User-agent: ClaudeBot
 Disallow: /
+
+Sitemap: https://portfolio-9m4.pages.dev/sitemap.xml

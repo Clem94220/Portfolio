@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub, FaDiscord, FaGlobe } from 'react-icons/fa';
-import { PROJECTS } from '../data/portfolioData';
+import { CRYSTAL, PROJECTS } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
 import SectionHeading from './SectionHeading';
 
@@ -122,6 +122,20 @@ function ProjectCard({ project }) {
                     {t.common?.repo || 'GitHub'}
                 </a>
 
+                {/* Discord en plus du site pour les projets web */}
+                {!isDiscordAction && project.discordUrl && (
+                    <a
+                        href={project.discordUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Discord"
+                        className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold bg-[#5865F2] hover:bg-[#4752c4] text-white shadow-[0_0_16px_rgba(88,101,242,0.3)] transition-all"
+                    >
+                        <FaDiscord className="text-sm sm:text-base" />
+                        <span className="hidden sm:inline">Discord</span>
+                    </a>
+                )}
+
                 {/* Button 2: Website (Crystal) or Discord (R&D) */}
                 <a
                     href={project.actionUrl}
@@ -142,7 +156,7 @@ function ProjectCard({ project }) {
 }
 
 export default function ProjectsSection() {
-    const { t } = useTranslation();
+    const { t, language } = useTranslation();
 
     const projectsData = PROJECTS.map((project, index) => {
         const trans = t.projects ? t.projects[index] : null;
@@ -152,6 +166,7 @@ export default function ProjectsSection() {
             summary: trans ? trans.summary : project.summary,
             impact: trans ? trans.impact : project.impact,
             actionLabel: trans?.actionLabel || project.actionLabel,
+            discordUrl: project.id === 'crystal' ? CRYSTAL.discordUrl : undefined,
         };
     });
 
@@ -160,7 +175,7 @@ export default function ProjectsSection() {
             <SectionHeading
                 title={t.nav.projects}
                 description={
-                    t.language === 'en'
+                    language === 'en'
                         ? 'Key software and development projects delivered.'
                         : 'Projets clés en développement et logiciels livrés.'
                 }

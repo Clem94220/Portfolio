@@ -43,7 +43,7 @@ echo [3/3] Envoi vers GitHub (https://github.com/Clem94220/Portfolio.git)...
 echo.
 
 "%GIT_EXE%" push origin main:main
-"%GIT_EXE%" push origin main:master --force
+"%GIT_EXE%" push origin main:master --force-with-lease
 
 if %errorlevel% neq 0 (
     echo.

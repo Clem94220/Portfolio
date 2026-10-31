@@ -36,31 +36,6 @@ export default function MusicPlayer() {
         audio.volume = muted ? 0 : volume;
     }, [volume, muted]);
 
-    useEffect(() => {
-        const audio = audioRef.current;
-        if (!audio) return;
-
-        // Try immediate autoplay first
-        audio.play()
-            .then(() => setPlaying(true))
-            .catch(() => {
-                // If blocked, wait for first user interaction globally
-                const playOnInteraction = () => {
-                    audio.play().then(() => {
-                        setPlaying(true);
-                        // Clean up listeners once playing
-                        ['click', 'scroll', 'touchstart', 'keydown'].forEach(event =>
-                            document.removeEventListener(event, playOnInteraction)
-                        );
-                    }).catch(() => { });
-                };
-
-                ['click', 'scroll', 'touchstart', 'keydown'].forEach(event =>
-                    document.addEventListener(event, playOnInteraction)
-                );
-            });
-    }, []);
-
     const togglePlay = useCallback(() => {
         const audio = audioRef.current;
         if (!audio) return;

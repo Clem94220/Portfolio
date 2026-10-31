@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     FaDiscord,
@@ -15,10 +16,15 @@ import {
     CRYSTAL,
     CRYSTAL_DURATIONS,
     CRYSTAL_OFFERS,
+    CRYSTAL_SCREENSHOTS,
+    CRYSTAL_VOUCHES,
+    DISCORD_DM_URL,
+    DISCORD_TICKET_URL,
     PAYMENT_METHODS,
 } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
 import PaymentCard from './PaymentCard';
+import ImageLightbox from './ImageLightbox';
 import SectionHeading from './SectionHeading';
 
 const CRYPTO_ICONS = {
@@ -54,6 +60,21 @@ export default function CrystalSection() {
         : ['1 Jour', '1 Semaine', '1 Mois', 'À Vie'];
 
     const offersList = t.crystal?.offers || CRYSTAL_OFFERS;
+
+    // Visionneuse : quel groupe d'images est ouvert et à quelle position
+    const [lightbox, setLightbox] = useState({ group: null, index: null });
+    const galleries = {
+        shots: CRYSTAL_SCREENSHOTS.map((shot) => ({
+            src: shot.src,
+            alt: `Kronos loader - ${language === 'en' ? shot.en : shot.fr}`,
+        })),
+        vouches: CRYSTAL_VOUCHES.map((vouch, index) => ({
+            src: vouch.src,
+            alt: `${language === 'en' ? 'Customer vouch' : 'Avis client'} ${index + 1}`,
+        })),
+    };
+    const openLightbox = (group, index) => setLightbox({ group, index });
+    const closeLightbox = () => setLightbox({ group: null, index: null });
 
     return (
         <div className="space-y-10">
@@ -103,6 +124,10 @@ export default function CrystalSection() {
                                     <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest rounded border border-white/20 text-txt-secondary">
                                         Studio &amp; Shop
                                     </span>
+                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest rounded border border-[var(--green)]/40 bg-[var(--green)]/10 text-[var(--green)]">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse" />
+                                        Undetected
+                                    </span>
                                 </div>
                                 <p className="text-sm text-txt-secondary mt-1 max-w-xl">
                                     {t.crystal?.description || CRYSTAL.description}
@@ -137,6 +162,88 @@ export default function CrystalSection() {
                     </div>
                 </div>
             </motion.div>
+
+            {/* ── Aperçu du loader ── */}
+            <div className="space-y-4">
+                <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                    {language === 'en' ? 'Loader preview' : 'Aperçu du loader'}
+                </h3>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                >
+                    {CRYSTAL_SCREENSHOTS.map((shot, index) => {
+                        const caption = language === 'en' ? shot.en : shot.fr;
+                        return (
+                            <motion.button
+                                type="button"
+                                key={shot.src}
+                                variants={item}
+                                onClick={() => openLightbox('shots', index)}
+                                className="crystal-card overflow-hidden group block w-full text-left cursor-zoom-in border border-white/10 hover:border-white/25 transition-colors"
+                            >
+                                <img
+                                    src={shot.src}
+                                    alt={`Kronos loader - ${caption}`}
+                                    className="w-full aspect-[16/10] object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <p className="px-4 py-2.5 text-xs font-mono text-txt-secondary">{caption}</p>
+                            </motion.button>
+                        );
+                    })}
+                </motion.div>
+            </div>
+
+            <ImageLightbox
+                images={lightbox.group ? galleries[lightbox.group] : []}
+                index={lightbox.index}
+                onClose={closeLightbox}
+                onChange={(index) => setLightbox((state) => ({ ...state, index }))}
+            />
+
+            {/* ── Avis clients ── */}
+            <div className="space-y-4">
+                <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
+                    {language === 'en' ? 'Customer vouches' : 'Avis clients'}
+                </h3>
+                <p className="text-sm text-txt-muted max-w-2xl">
+                    {language === 'en'
+                        ? 'Real vouches posted by customers in the Discord. Click an image to enlarge it.'
+                        : 'De vrais avis postés par les clients sur le Discord. Clique sur une image pour l’agrandir.'}
+                </p>
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+                >
+                    {CRYSTAL_VOUCHES.map((vouch, index) => (
+                        <motion.button
+                            type="button"
+                            key={vouch.src}
+                            variants={item}
+                            onClick={() => openLightbox('vouches', index)}
+                            className="crystal-card overflow-hidden block w-full cursor-zoom-in border border-white/10 hover:border-white/25 transition-colors"
+                        >
+                            <img
+                                src={vouch.src}
+                                alt={`${language === 'en' ? 'Customer vouch' : 'Avis client'} ${index + 1}`}
+                                className="w-full aspect-[4/5] object-cover object-top"
+                                loading="lazy"
+                                decoding="async"
+                            />
+                        </motion.button>
+                    ))}
+                </motion.div>
+            </div>
 
             {/* ── 2. Offres & Produits Disponibles (Cartes Sombres / Néon) ── */}
             <div className="space-y-4">
@@ -268,6 +375,39 @@ export default function CrystalSection() {
                     </div>
                 </div>
             </motion.div>
+
+            {/* ── Une question ? ── */}
+            <div className="crystal-card p-6 sm:p-7 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                    <h3 className="text-sm font-bold font-display uppercase tracking-widest text-txt-primary">
+                        {language === 'en' ? 'Got a question?' : 'Une question ?'}
+                    </h3>
+                    <p className="text-sm text-txt-secondary max-w-xl leading-relaxed">
+                        {language === 'en'
+                            ? 'Send me a DM on Discord or open a ticket in the server, I answer as soon as I can.'
+                            : 'Envoie-moi un DM sur Discord ou ouvre un ticket sur le serveur, je réponds dès que possible.'}
+                    </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                    <a
+                        href={DISCORD_DM_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] text-white px-4 py-2.5 text-sm font-bold font-display uppercase tracking-wider transition-colors"
+                    >
+                        <FaDiscord className="text-base" />
+                        {language === 'en' ? 'DM me' : 'Me DM'}
+                    </a>
+                    <a
+                        href={DISCORD_TICKET_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-txt-secondary hover:text-txt-primary hover:border-white/40 transition-colors"
+                    >
+                        {language === 'en' ? 'Open a ticket' : 'Ouvrir un ticket'}
+                    </a>
+                </div>
+            </div>
 
             {/* ── 4. Moyens de Paiement (Séparation Distincte PayPal & Cryptos) ── */}
             <div className="space-y-6">

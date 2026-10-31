@@ -6,9 +6,7 @@ import { useTranslation } from '../contexts/LanguageContext';
  *
  * 1. Anti-iframe (frame-busting backup)
  * 2. Console warning message
- * 3. Right-click disabled
- * 4. Text selection disabled on non-input elements
- * 5. Keyboard shortcut blocking (F12, Ctrl+Shift+I/J/C, Ctrl+U)
+ * 3. Image drag disabled
  */
 export default function SecurityShield() {
     const { t } = useTranslation();
@@ -42,56 +40,17 @@ export default function SecurityShield() {
             `%c${t.security.warning}`,
             subStyle
         );
-        console.log(
-            `%c${t.security.respect}`,
-            subStyle
-        );
 
-        // ── 3. Block devtools keyboard shortcuts ──
-        const handleKeyDown = (e) => {
-            // F12
-            if (e.key === 'F12') {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl+Shift+I (Inspector)
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl+Shift+J (Console)
-            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl+Shift+C (Element picker)
-            if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl+U (View source)
-            if (e.ctrlKey && !e.shiftKey && (e.key === 'u' || e.key === 'U')) {
-                e.preventDefault();
-                return false;
-            }
-        };
-
-        // ── 4. Block drag on images ──
+        // ── 3. Block drag on images ──
         const handleDragStart = (e) => {
             if (e.target.tagName === 'IMG') {
                 e.preventDefault();
             }
         };
 
-        document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('dragstart', handleDragStart);
 
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('dragstart', handleDragStart);
         };
     }, []);

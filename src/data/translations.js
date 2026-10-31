@@ -55,7 +55,7 @@ export const translations = {
             badge: 'Portfolio personnel',
             title: 'Clem',
             subtitle: 'Développeur web passionné, entre code et gaming compétitif',
-            identity: 'Je m\'appelle Clément, j\'ai 17 ans.',
+            identity: 'Je m\'appelle Clément, j\'ai 18 ans.',
             studies: 'Je suis actuellement étudiant en L1 AEI (Administration et Échanges Internationaux) à l\'UPEC (International School).',
             location: 'France',
             availability: 'Ouvert aux collaborations et projets web',
@@ -220,7 +220,6 @@ export const translations = {
         },
         security: {
             warning: 'Cette console est destinée aux développeurs. Si quelqu\'un vous a demandé de coller quelque chose ici, c\'est une arnaque. Fermez cette fenêtre.',
-            respect: 'Si tu es développeur, respect. Mais sache que tout est monitoré. 🛡️',
         },
         footer: {
             desc: 'Développeur passionné par le web moderne, les logiciels C/C++ et les expériences interactives.',
@@ -288,7 +287,7 @@ export const translations = {
             badge: 'Personal portfolio',
             title: 'Clem',
             subtitle: 'Passionate web developer, between coding and competitive gaming',
-            identity: 'My name is Clement, I am 17 years old.',
+            identity: 'My name is Clement, I am 18 years old.',
             studies: 'I am currently a 1st year university student in AEI (Administration and International Exchanges / International School) at UPEC.',
             location: 'France',
             availability: 'Open to collaborations and web projects',
@@ -453,7 +452,6 @@ export const translations = {
         },
         security: {
             warning: 'This console is for developers. If someone asked you to paste something here, it is a scam. Close this window.',
-            respect: 'If you are a developer, respect. But know that everything is monitored. 🛡️',
         },
         footer: {
             desc: 'Developer passionate about modern web, C/C++ software, and interactive experiences.',
