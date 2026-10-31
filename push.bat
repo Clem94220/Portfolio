@@ -15,6 +15,9 @@ if not exist ".git\" (
     echo Initialisation du repository Git...
     "%GIT_EXE%" init -b main
     "%GIT_EXE%" remote add origin https://github.com/Clem94220/Portfolio.git
+    rem Dossier telecharge en ZIP : on se rattache a l'historique GitHub sans toucher aux fichiers
+    "%GIT_EXE%" fetch origin
+    "%GIT_EXE%" reset --soft origin/main
 )
 
 "%GIT_EXE%" remote get-url origin >nul 2>&1
@@ -42,10 +45,21 @@ echo.
 echo [3/3] Envoi vers GitHub (https://github.com/Clem94220/Portfolio.git)...
 echo.
 
-"%GIT_EXE%" push origin main:main
-"%GIT_EXE%" push origin main:master --force-with-lease
+rem Recupere d'abord ce qui aurait ete modifie directement sur GitHub
+set "PUSH_FAILED=0"
+"%GIT_EXE%" pull --rebase origin main
+if %errorlevel% neq 0 set "PUSH_FAILED=1"
 
-if %errorlevel% neq 0 (
+if "%PUSH_FAILED%"=="0" (
+    "%GIT_EXE%" push origin main:main
+    if errorlevel 1 set "PUSH_FAILED=1"
+)
+if "%PUSH_FAILED%"=="0" (
+    "%GIT_EXE%" push origin main:master
+    if errorlevel 1 set "PUSH_FAILED=1"
+)
+
+if "%PUSH_FAILED%"=="1" (
     echo.
     echo [ERROR] Push echoue. Verifiez vos identifiants GitHub ou votre connexion.
     echo.
