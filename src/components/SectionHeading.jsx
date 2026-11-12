@@ -1,11 +1,11 @@
-export default function SectionHeading({ title, description }) {
+// Titre de section : un vrai h2, et une phrase d'introduction qui se place à côté sur grand écran.
+export default function SectionHeading({ title, description, className = '' }) {
     return (
-        <div className="space-y-2">
-            <div className="flex items-center gap-2">
-                <span className="section-heading-bar" />
-                <h2 className="text-sm uppercase tracking-[0.22em] font-display text-txt-secondary">{title}</h2>
-            </div>
-            {description && <p className="text-sm sm:text-base text-txt-muted max-w-2xl">{description}</p>}
+        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-4 items-end mb-12 sm:mb-16 ${className}`}>
+            <h2 className="type-h2 text-txt-primary lg:col-span-7">{title}</h2>
+            {description && (
+                <p className="prose-body lg:col-span-5 lg:pb-1">{description}</p>
+            )}
         </div>
     );
 }

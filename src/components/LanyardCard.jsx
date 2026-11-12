@@ -1,5 +1,4 @@
-import { useRef, useCallback } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useTranslation } from '../contexts/LanguageContext';
 
 function formatElapsed(startMs, t) {
@@ -59,54 +58,6 @@ function SpotifyVisualizer() {
 
 export default function LanyardCard({ data, loading, error }) {
     const { t } = useTranslation();
-
-    // ── Zero-React-rerender tilt using direct DOM mutation via ref
-    const cardRef = useRef(null);
-    const rafRef = useRef(null);
-    const tiltDataRef = useRef({ rX: 0, rY: 0, active: false });
-
-    const handleMouseMove = useCallback((event) => {
-        const card = cardRef.current;
-        if (!card) return;
-
-        const rect = card.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left - rect.width / 2;
-        const mouseY = event.clientY - rect.top - rect.height / 2;
-
-        tiltDataRef.current.rX = -(mouseY / (rect.height / 2)) * 6;
-        tiltDataRef.current.rY = (mouseX / (rect.width / 2)) * 6;
-        tiltDataRef.current.active = true;
-
-        if (rafRef.current === null) {
-            rafRef.current = requestAnimationFrame(() => {
-                const el = cardRef.current;
-                if (el && tiltDataRef.current.active) {
-                    const { rX, rY } = tiltDataRef.current;
-                    el.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) scale3d(1.02,1.02,1.02)`;
-                    el.style.zIndex = '30';
-                }
-                rafRef.current = null;
-            });
-        }
-    }, []);
-
-    const handleMouseLeave = useCallback(() => {
-        tiltDataRef.current.active = false;
-        if (rafRef.current) {
-            cancelAnimationFrame(rafRef.current);
-            rafRef.current = null;
-        }
-        const el = cardRef.current;
-        if (el) {
-            el.style.transition = 'transform 0.4s ease-out';
-            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-            el.style.zIndex = '';
-            // Remove transition after animation to allow fast re-entry
-            setTimeout(() => {
-                if (el) el.style.transition = '';
-            }, 400);
-        }
-    }, []);
 
     if (loading) {
         return (
@@ -175,12 +126,9 @@ export default function LanyardCard({ data, loading, error }) {
         : `https://cdn.discordapp.com/embed/avatars/${(BigInt(discord_user.id) >> 22n) % 6n}.png`;
 
     return (
-        <motion.div
-            ref={cardRef}
+        <m.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className="crystal-card overflow-hidden"
         >
             <div className="p-4 relative z-10">
@@ -192,26 +140,22 @@ export default function LanyardCard({ data, loading, error }) {
                             className="w-16 h-16 rounded-full"
                             loading="lazy"
                             decoding="async"
-                            style={{ boxShadow: `0 0 14px ${status.glow}` }}
                         />
                         <span
-                            className={`absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 ${
-                                discord_status === 'online' ? 'animate-pulse' : ''
-                            }`}
+                            className="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2"
                             style={{
                                 backgroundColor: status.color,
-                                boxShadow: `0 0 10px ${status.glow}`,
                                 borderColor: 'var(--bg-dark)',
                             }}
                         />
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <h3 className="text-txt-primary font-semibold text-lg truncate">
+                        <p className="text-txt-primary font-semibold text-lg truncate">
                             {discord_user.display_name || discord_user.global_name || discord_user.username}
-                        </h3>
-                        <p className="text-txt-muted text-sm font-mono truncate">@{discord_user.username}</p>
-                        <div className="flex items-center gap-1.5 mt-0.5">
+                        </p>
+                        <p className="text-txt-muted type-data truncate">@{discord_user.username}</p>
+                        <div className="flex items-center gap-1.5 mt-0.5 min-w-0">
                             <span className="relative flex h-2 w-2 items-center justify-center">
                                 {discord_status === 'online' && (
                                     <span
@@ -224,14 +168,14 @@ export default function LanyardCard({ data, loading, error }) {
                                     style={{ backgroundColor: status.color }}
                                 />
                             </span>
-                            <span className="text-xs text-txt-secondary">{status.label}</span>
+                            <span className="text-xs text-txt-secondary truncate">{status.label}</span>
                         </div>
                     </div>
                 </div>
 
                 <AnimatePresence>
                     {customStatus?.state && (
-                        <motion.p
+                        <m.p
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
@@ -239,13 +183,13 @@ export default function LanyardCard({ data, loading, error }) {
                         >
                             {customStatus.emoji?.name && <span className="mr-1">{customStatus.emoji.name}</span>}
                             {customStatus.state}
-                        </motion.p>
+                        </m.p>
                     )}
                 </AnimatePresence>
 
                 <AnimatePresence>
                     {hasActivity && (
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -8 }}
@@ -266,7 +210,7 @@ export default function LanyardCard({ data, loading, error }) {
                                     />
                                 )}
                                 <div className="min-w-0 flex-1">
-                                    <p className="text-[11px] font-mono uppercase tracking-wider text-txt-muted mb-0.5">
+                                    <p className="type-label text-xs mb-0.5">
                                         {ACTIVITY_LABELS[activity.type] || t.common.activity}
                                     </p>
                                     <div className="flex items-center justify-between gap-2">
@@ -284,10 +228,10 @@ export default function LanyardCard({ data, loading, error }) {
                                     )}
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
                 </AnimatePresence>
             </div>
-        </motion.div>
+        </m.div>
     );
 }

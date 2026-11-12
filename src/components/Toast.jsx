@@ -1,14 +1,19 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useToast } from '../contexts/ToastContext';
 
 export default function Toast() {
     const { toasts } = useToast();
 
     return (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none">
+        <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-2 pointer-events-none"
+        >
             <AnimatePresence>
                 {toasts.map((toast) => (
-                    <motion.div
+                    <m.div
                         key={toast.id}
                         initial={{ opacity: 0, y: -24, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -17,7 +22,7 @@ export default function Toast() {
                         style={{ background: 'rgba(12,14,18,0.84)', color: 'var(--text-primary)' }}
                     >
                         {toast.message}
-                    </motion.div>
+                    </m.div>
                 ))}
             </AnimatePresence>
         </div>

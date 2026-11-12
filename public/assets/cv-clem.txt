@@ -1,20 +1,33 @@
-CV - Clem
+CLÉMENT — CV
+Interfaces web en React, outils Windows en C et C++.
+France · Ouvert aux collaborations web
 
-Profil
-- Developpeur full-stack oriente frontend moderne (React, Tailwind, Vite)
-- Etudiant en L1 AEI (Administration et Echanges Internationaux) a l UPEC (International School)
-- Interet fort pour la performance, la lisibilite et l experience utilisateur
+ÉTUDES
+- L1 AEI (Administration et Échanges Internationaux), UPEC — International School. En cours.
 
-Competences
-- React, JavaScript, Tailwind CSS, Node.js
-- Python, C++, Git
+CE QUE J'UTILISE
+- Web : React, JavaScript, Tailwind CSS, Vite, Node.js
+- Logiciel : C, C++, Python
+- Outils : Git, Cloudflare Pages / Workers KV
 
-Projets
-- Portfolio one-page dev + gaming
-- Integration de presence Discord en temps reel via Lanyard
-- Landing communautaire Kronos Solution
+PROJETS
+- Ce portfolio (React, Vite, Cloudflare Pages)
+  Présence Discord en direct via le WebSocket de Lanyard, avec repli automatique si la connexion tombe.
+  Compteur de visites maison : Pages Function + Cloudflare KV, un visiteur compté une fois par 24 h.
+- Kronos Solution — cofondé avec Aurélien
+  Mise en place du serveur, de l'offre et du support client au quotidien.
+- R&D Logiciels Windows
+  Outils Windows sur mesure, livrés pour des besoins précis puis améliorés selon les retours.
 
-Contact
-- Discord: https://discord.gg/evhpge7UCE
-- Instagram: https://www.instagram.com/clem94_220
-- Steam: https://steamcommunity.com/id/947616406464/
+PARCOURS
+- 2024 → aujourd'hui : projets React perso, testés sur mobile et desktop.
+- 2023 → 2024 : JavaScript, Node.js, API, bases du C, sur des projets concrets.
+
+À CÔTÉ
+- Jeu compétitif : Top 1000 Unreal sur Fortnite. Valorant, Overwatch, Forza Horizon 5.
+- Ancien staff / modération sur plusieurs serveurs Discord (Eon, Jinx, Fairgame).
+
+CONTACT
+- Discord : https://discord.gg/evhpge7UCE
+- GitHub : https://github.com/Clem94220
+- Instagram : https://www.instagram.com/clem94_220

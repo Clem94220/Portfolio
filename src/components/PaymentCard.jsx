@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useToast } from '../contexts/ToastContext';
 import { FaExternalLinkAlt, FaCheck, FaCopy } from 'react-icons/fa';
 
@@ -30,37 +29,22 @@ export default function PaymentCard({ icon: Icon, name, value, copyValue, link, 
     };
 
     return (
-        <motion.div
-            whileHover={{ y: -4, scale: 1.01 }}
-            className="crystal-card p-5 group relative overflow-hidden transition-all duration-300 border border-white/10 hover:border-white/25 flex flex-col justify-between"
-            style={{
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.4)',
-            }}
-        >
-            {/* Ambient neon color aura on hover */}
-            <div
-                className="absolute -inset-px opacity-0 group-hover:opacity-15 transition-opacity duration-500 pointer-events-none rounded-2xl blur-xl"
-                style={{ background: color }}
-            />
+        <div className="surface p-5 flex flex-col justify-between h-full transition-colors hover:border-[var(--border-highlight)]">
 
             <div className="relative z-10 space-y-3">
                 {/* Header with Icon & Name */}
                 <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                         <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 group-hover:scale-105 transition-transform"
-                            style={{
-                                background: 'rgba(255, 255, 255, 0.03)',
-                                boxShadow: `0 0 16px ${color}22`,
-                            }}
+                            className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 shrink-0"
                         >
-                            {Icon && <Icon className="text-xl" style={{ color }} />}
+                            {Icon && <Icon aria-hidden="true" className="text-xl" style={{ color }} />}
                         </div>
                         <div>
-                            <h4 className="text-txt-primary font-bold tracking-wide text-sm font-display">
+                            <h4 className="text-txt-primary font-semibold">
                                 {name}
                             </h4>
-                            <span className="text-[10px] font-mono uppercase tracking-widest text-txt-muted">
+                            <span className="type-label text-xs">
                                 {link ? 'Direct Link' : 'Instant Transfer'}
                             </span>
                         </div>
@@ -82,37 +66,31 @@ export default function PaymentCard({ icon: Icon, name, value, copyValue, link, 
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-2.5 px-4 rounded-xl border border-white/15 hover:border-white/35 text-xs font-semibold text-white transition-all flex items-center justify-center gap-2 hover:bg-white/[0.08]"
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.03)',
-                        }}
+                        className="btn btn-ghost w-full justify-center"
                     >
-                        <FaExternalLinkAlt className="text-xs" />
+                        <FaExternalLinkAlt aria-hidden="true" className="text-xs" />
                         Payer via PayPal
                     </a>
                 ) : (
                     <button
                         onClick={handleCopy}
                         type="button"
-                        className="w-full py-2.5 px-4 rounded-xl border border-white/15 hover:border-white/35 text-xs font-semibold text-txt-secondary hover:text-white transition-all flex items-center justify-center gap-2 hover:bg-white/[0.08] cursor-pointer"
-                        style={{
-                            background: 'rgba(255, 255, 255, 0.03)',
-                        }}
+                        className="btn btn-ghost w-full justify-center"
                     >
                         {copied ? (
                             <>
-                                <FaCheck className="text-xs text-[var(--green)]" />
+                                <FaCheck aria-hidden="true" className="text-xs text-[var(--green)]" />
                                 <span className="text-[var(--green)]">Copié !</span>
                             </>
                         ) : (
                             <>
-                                <FaCopy className="text-xs" />
+                                <FaCopy aria-hidden="true" className="text-xs" />
                                 <span>Copier l&apos;adresse</span>
                             </>
                         )}
                     </button>
                 )}
             </div>
-        </motion.div>
+        </div>
     );
 }

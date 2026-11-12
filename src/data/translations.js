@@ -1,3 +1,10 @@
+// Tous les textes du site. Une seule voix : première personne, tutoiement, phrases courtes.
+// Les blocs `common` et `crystal` (Kronos) sont repris tels quels.
+//
+// TODO (Clément) — à compléter avec tes propres mots, ils s'afficheront automatiquement :
+//   projects[*].problem  → ce qui coinçait au départ (Kronos, R&D Windows)
+//   projects[*].learning → ce que tu en retiens (les trois projets)
+
 export const translations = {
     fr: {
         common: {
@@ -42,53 +49,71 @@ export const translations = {
             discordInvite: 'Discord',
             repo: 'GitHub',
         },
+        meta: {
+            title: 'Clément · Interfaces web et outils Windows',
+            description: 'Clément, 18 ans : je construis des interfaces web en React et des outils Windows en C++. Projets, méthode, parcours et contact.',
+        },
+        ui: {
+            skipToContent: 'Aller au contenu',
+            switchLanguage: 'Switch to English',
+            switchLanguageShort: 'EN',
+            backToTop: 'Retour en haut',
+            menu: 'Sections du site',
+            views: 'Vues',
+            active: 'En ligne',
+        },
         nav: {
             home: 'Accueil',
             projects: 'Projets',
             crystal: 'Kronos',
+            approach: 'Méthode',
             about: 'Parcours',
-            gaming: 'Gaming',
-            community: 'Communauté',
+            side: 'À côté',
             contact: 'Contact',
         },
-        profile: {
-            badge: 'Portfolio personnel',
-            title: 'Clem',
-            subtitle: 'Développeur web passionné, entre code et gaming compétitif',
-            identity: 'Je m\'appelle Clément, j\'ai 18 ans.',
-            studies: 'Je suis actuellement étudiant en L1 AEI (Administration et Échanges Internationaux) à l\'UPEC (International School).',
-            location: 'France',
-            availability: 'Ouvert aux collaborations et projets web',
-            summary: 'J\'aime créer des interfaces simples, rapides et agréables à utiliser, avec du code propre et maintenable.',
-            viewProjects: 'Voir les projets',
+        hero: {
+            name: 'Clément',
+            lead: 'Je construis des interfaces web en React, et parfois des outils Windows en C++.',
+            body: 'J\'ai 18 ans et je suis en L1 AEI à l\'UPEC. Le code, je l\'apprends à côté, sur des projets concrets. Ce site en est un : ma présence Discord s\'affiche en direct et le compteur de visites tourne sur mon propre backend Cloudflare.',
+            meta: 'France · Ouvert aux collaborations web',
+            ctaProjects: 'Voir les projets',
+            ctaCv: 'Lire mon CV',
+            presenceLabel: 'En ce moment sur Discord',
+            stackLabel: 'Ce que j\'utilise',
+            socialsLabel: 'Mes profils',
         },
-        stats: {
-            technologies: 'Technologies clés',
-            card1Title: 'Développement & Projets',
-            card1Value: 'Projets & Code',
-            card1Desc: 'Apprentissage continu et conception de projets concrets',
-            card2Title: 'Communauté Software',
-            card2Value: 2,
-            card2Suffix: '+ ans',
-            card2Desc: 'Plus de 2 ans dans l\'écosystème software et dev',
-            card3Title: 'Esprit Compétitif',
-            card3Value: 'Competitive Player',
-            card3Desc: 'Fortnite, Valorant, Overwatch — rigueur et réflexes',
+        projectsSection: {
+            title: 'Projets',
+            intro: 'Trois projets, racontés simplement : ce qui coinçait, ce que j\'ai fait, ce que ça a donné.',
+            problem: 'Le problème',
+            approach: 'Ce que j\'ai fait',
+            result: 'Résultat',
+            learning: 'Ce que j\'en retiens',
+            stack: 'Stack',
         },
-        projects: [
-            {
-                title: 'Kronos Solution',
-                summary: 'Projet monté avec Aurélien. On y propose nos logiciels et on gère le support via la communauté.',
-                impact: 'Mise en place du serveur, de l\'offre et du support client au quotidien.',
-                actionLabel: 'Site Web',
+        projects: {
+            portfolio: {
+                title: 'Ce portfolio',
+                problem: 'Je voulais un site qui montre ce que je fais en ce moment, pas une page figée. Et sans payer ni maintenir de serveur.',
+                approach: [
+                    'Une app React et Vite hébergée sur Cloudflare Pages. Ma présence Discord arrive en direct par le WebSocket de Lanyard. Si la connexion échoue trois fois, le site passe à une requête toutes les 12 secondes au lieu d\'afficher une erreur.',
+                    'Pour le compteur de visites, j\'ai écrit une Pages Function qui stocke les passages dans Cloudflare KV. Un visiteur n\'est compté qu\'une fois par 24 heures, reconnu par une empreinte hachée en SHA-256 plutôt que par son IP en clair, avec au plus une requête toutes les 5 secondes.',
+                ],
+                result: 'Le site tourne sans serveur à gérer, et le compteur ne compte pas deux fois la même personne dans la journée.',
             },
-            {
+            crystal: {
+                title: 'Kronos Solution',
+                approach: ['Projet monté avec Aurélien. On y propose nos logiciels et on gère le support via la communauté.'],
+                result: 'Mise en place du serveur, de l\'offre et du support client au quotidien.',
+                actionLabel: 'Site web',
+            },
+            rd_windows: {
                 title: 'R&D Logiciels Windows',
-                summary: 'Conception d\'outils Windows sur mesure, avec un gros focus sur la stabilité et les performances.',
-                impact: 'Des outils concrets livrés pour des besoins précis, puis améliorés selon les retours.',
+                approach: ['Conception d\'outils Windows sur mesure, avec un gros focus sur la stabilité et les performances.'],
+                result: 'Des outils concrets livrés pour des besoins précis, puis améliorés selon les retours.',
                 actionLabel: 'Discord',
-            }
-        ],
+            },
+        },
         crystal: {
             description: 'Projet cofondé avec Aurélien. On développe nos propres logiciels et on accompagne les utilisateurs sur Discord.',
             shopBtn: 'Ouvrir la boutique',
@@ -141,95 +166,71 @@ export const translations = {
                 },
             ]
         },
+        approach: {
+            title: 'Comment je travaille',
+            principles: [
+                {
+                    title: 'Je pars de ce qui peut casser.',
+                    text: 'Avant d\'ajouter une fonctionnalité, je regarde ce qui se passe quand elle échoue. Si le WebSocket Discord tombe, le site passe par une autre route. Si ton navigateur bloque le stockage local, en navigation privée par exemple, rien ne plante : ta préférence de langue n\'est juste pas retenue.',
+                },
+                {
+                    title: 'Je regarde ce que ça coûte.',
+                    text: 'Un effet joli qui fait ramer un téléphone n\'en vaut pas la peine. J\'ai retiré le flou des animations d\'apparition parce qu\'il chargeait trop la carte graphique. Le nombre de particules du fond dépend de la taille de l\'écran, et elles s\'arrêtent si ton système demande moins d\'animations.',
+                },
+                {
+                    title: 'Je livre, puis je corrige.',
+                    text: 'Le jeu compétitif m\'a appris ça. Sur Fortnite, le Top 1000 Unreal est venu de la régularité, pas d\'un coup d\'éclat. En code, je fais pareil : une première version qui marche, des retours, puis des corrections.',
+                },
+            ],
+        },
         about: {
-            headingTitle: 'Parcours',
-            headingDesc: 'Un résumé simple de mon parcours et de ma progression en dev.',
-            cardTitle: 'À propos',
-            cardTextExtra: 'Mon objectif est simple : faire des interfaces propres, maintenables et fluides, sur mobile comme sur desktop.',
+            title: 'Parcours',
+            text: 'Le code, je l\'ai appris sur des projets concrets : JavaScript et Node.js d\'abord, puis React, et des bases en C et C++ pour les outils Windows. À côté, je suis en L1 AEI (Administration et Échanges Internationaux) à l\'International School de l\'UPEC, un cursus qui n\'a rien à voir avec le code.',
             timeline: [
                 {
-                    title: 'Projets web perso',
-                    description: 'Création de projets React persos, avec beaucoup de tests UI sur mobile et desktop.',
+                    period: 'Aujourd\'hui',
+                    title: 'L1 AEI à l\'UPEC',
+                    description: 'Administration et Échanges Internationaux, à l\'International School. Les projets continuent à côté.',
                 },
                 {
-                    title: 'Montée en compétences full-stack',
-                    description: 'Apprentissage de JavaScript, Node.js, API et bases en C sur des projets concrets.',
+                    period: '2024 → aujourd\'hui',
+                    title: 'Projets React perso',
+                    description: 'Des projets React à moi, testés à la main sur mobile et sur desktop.',
                 },
                 {
-                    title: 'Esprit compétitif gaming',
-                    description: 'Le gaming m\'a appris à itérer vite, analyser mes erreurs et rester régulier.',
-                }
-            ]
+                    period: '2023 → 2024',
+                    title: 'JavaScript, Node.js, C',
+                    description: 'J\'ai appris JavaScript, Node.js, les API et les bases du C en construisant des choses qui servaient.',
+                },
+            ],
         },
-        gaming: {
-            headingTitle: 'Gaming',
-            headingDesc: 'Le gaming compétitif m\'a aidé à développer des réflexes utiles en dev : analyse, adaptation et exécution.',
-            entries: [
-                {
-                    title: 'Overwatch',
-                    detail: 'Communication et prise de décision rapide en équipe.',
-                },
-                {
-                    title: 'Fortnite',
-                    detail: 'Top 1000 Unreal atteint, avec un vrai focus sur la constance.',
-                },
-                {
-                    title: 'Valorant',
-                    detail: 'Jeu tactique : lecture du jeu, prise d\'informations et décisions sous pression.',
-                },
-                {
-                    title: 'Forza Horizon 5',
-                    detail: 'Précision et régularité sur des sessions longues.',
-                }
-            ]
-        },
-        community: {
-            headingTitle: 'Communauté',
-            headingDesc: 'Mon parcours communautaire et mes expériences passées en tant que staff.',
-            staffServers: 'Expériences Staff (Passées)',
-            staffServersNote: 'Serveurs Discord où j\'ai exercé en tant que staff & modérateur par le passé.',
-            pastStaffRole: 'Ancien Staff',
-            teamFriends: 'Équipe / Amis',
-            members: [
-                {
-                    name: 'Aurélien',
-                    role: 'Développeur Logiciel - C, C++, C# (Co-fondateur - Kronos Solution)',
-                    badges: ['Co-fondateur Kronos Solution'],
-                },
-                {
-                    name: 'Vardox',
-                    role: 'Développeur Web Full-Stack & Développeur C/C++ - React, Node.js, Tailwind, HTML/CSS',
-                    stats: 'Valorant Diamant - Joueur Fortnite',
-                    badges: ['Staff chez Arp'],
-                },
-                {
-                    name: 'Wayp',
-                    role: 'Joueur compétitif & CRT Trader',
-                    stats: 'Fortnite Unreal Top 1000 - Haut rang Sea of Thieves - CRT Trader',
-                }
-            ]
+        side: {
+            title: 'À côté du code',
+            intro: 'Le jeu compétitif et la modération Discord m\'ont appris des choses que je retrouve en dev : décider vite, rester régulier, garder son calme avec beaucoup de monde.',
+            gamesTitle: 'Jeux',
+            staffTitle: 'Ancien staff Discord',
+            staffNote: 'Serveurs où j\'ai fait partie de la modération.',
+            pastStaffRole: 'Ancien staff',
+            games: [
+                { title: 'Fortnite', detail: 'Top 1000 Unreal atteint, avec un vrai focus sur la constance.' },
+                { title: 'Valorant', detail: 'Lecture du jeu, prise d\'informations et décisions sous pression.' },
+                { title: 'Overwatch', detail: 'Communication et prise de décision rapide en équipe.' },
+                { title: 'Forza Horizon 5', detail: 'Précision et régularité sur des sessions longues.' },
+            ],
         },
         contact: {
-            headingTitle: 'Contact',
-            headingDesc: 'Le plus simple pour me contacter reste Discord. Tu trouveras aussi mes liens réseaux juste en-dessous.',
-            cardTitle: 'Discutons de ton projet',
-            cardText: 'Si tu veux parler de collaboration, de logiciels sur mesure ou de partenariats, rejoins-moi sur Discord ou sur mes réseaux.',
-        },
-        loader: {
-            loadingText: 'Chargement du portfolio',
+            title: 'Le plus simple, c\'est Discord.',
+            text: 'Pour parler d\'un projet web, d\'une collaboration ou d\'un de mes projets, rejoins le serveur ou écris-moi en privé.',
+            dm: 'M\'écrire en privé',
+            elsewhere: 'Ailleurs',
         },
         security: {
             warning: 'Cette console est destinée aux développeurs. Si quelqu\'un vous a demandé de coller quelque chose ici, c\'est une arnaque. Fermez cette fenêtre.',
         },
         footer: {
-            desc: 'Développeur passionné par le web moderne, les logiciels C/C++ et les expériences interactives.',
+            desc: 'Interfaces web en React, outils Windows en C et C++.',
+            rights: 'Tous droits réservés.',
         },
-        modal: {
-            title: 'Choisissez votre langue',
-            subtitle: 'Veuillez sélectionner la langue d\'affichage du site.',
-            fr: 'Français',
-            en: 'English',
-        }
     },
     en: {
         common: {
@@ -274,53 +275,71 @@ export const translations = {
             discordInvite: 'Discord',
             repo: 'GitHub',
         },
+        meta: {
+            title: 'Clément · Web interfaces and Windows tools',
+            description: 'Clément, 18: I build web interfaces in React and Windows tools in C++. Projects, approach, background and contact.',
+        },
+        ui: {
+            skipToContent: 'Skip to content',
+            switchLanguage: 'Passer en français',
+            switchLanguageShort: 'FR',
+            backToTop: 'Back to top',
+            menu: 'Site sections',
+            views: 'Views',
+            active: 'Online',
+        },
         nav: {
             home: 'Home',
             projects: 'Projects',
             crystal: 'Kronos',
-            about: 'Timeline',
-            gaming: 'Gaming',
-            community: 'Community',
+            approach: 'Approach',
+            about: 'Background',
+            side: 'Outside code',
             contact: 'Contact',
         },
-        profile: {
-            badge: 'Personal portfolio',
-            title: 'Clem',
-            subtitle: 'Passionate web developer, between coding and competitive gaming',
-            identity: 'My name is Clement, I am 18 years old.',
-            studies: 'I am currently a 1st year university student in AEI (Administration and International Exchanges / International School) at UPEC.',
-            location: 'France',
-            availability: 'Open to collaborations and web projects',
-            summary: 'I love creating simple, fast, and pleasant interfaces to use, with clean and maintainable code.',
-            viewProjects: 'View projects',
+        hero: {
+            name: 'Clément',
+            lead: 'I build web interfaces in React, and sometimes Windows tools in C++.',
+            body: 'I\'m 18 and in my first year of an AEI degree at UPEC. I learn to code on the side, through real projects. This site is one of them: my Discord presence shows up live, and the visit counter runs on my own Cloudflare backend.',
+            meta: 'France · Open to web collaborations',
+            ctaProjects: 'See the projects',
+            ctaCv: 'Read my CV',
+            presenceLabel: 'On Discord right now',
+            stackLabel: 'What I use',
+            socialsLabel: 'My profiles',
         },
-        stats: {
-            technologies: 'Key technologies',
-            card1Title: 'Development & Projects',
-            card1Value: 'Projects & Code',
-            card1Desc: 'Continuous learning and building concrete software projects',
-            card2Title: 'Software Community',
-            card2Value: 2,
-            card2Suffix: '+ years',
-            card2Desc: 'Over 2 years active in the software & dev community',
-            card3Title: 'Competitive Spirit',
-            card3Value: 'Competitive Player',
-            card3Desc: 'Fortnite, Valorant, Overwatch — discipline and reflexes',
+        projectsSection: {
+            title: 'Projects',
+            intro: 'Three projects, told plainly: what was in the way, what I did, how it turned out.',
+            problem: 'The problem',
+            approach: 'What I did',
+            result: 'Result',
+            learning: 'What I took from it',
+            stack: 'Stack',
         },
-        projects: [
-            {
+        projects: {
+            portfolio: {
+                title: 'This portfolio',
+                problem: 'I wanted a site that shows what I\'m doing right now instead of a static page, without paying for or maintaining a server.',
+                approach: [
+                    'A React and Vite app hosted on Cloudflare Pages. My Discord presence comes in live through Lanyard\'s WebSocket. If the connection fails three times, the site falls back to one request every 12 seconds instead of showing an error.',
+                    'For the visit counter, I wrote a Pages Function that stores visits in Cloudflare KV. A visitor is counted once per 24 hours, recognised by a SHA-256 hashed fingerprint rather than a raw IP, with at most one request every 5 seconds.',
+                ],
+                result: 'The site runs with no server to manage, and the counter never counts the same person twice in a day.',
+            },
+            crystal: {
                 title: 'Kronos Solution',
-                summary: 'Project launched with Aurelien. We offer our software products and manage support via the community.',
-                impact: 'Setting up the server, the offer, and client support on a daily basis.',
+                approach: ['Project launched with Aurelien. We offer our software products and manage support via the community.'],
+                result: 'Setting up the server, the offer, and client support on a daily basis.',
                 actionLabel: 'Website',
             },
-            {
+            rd_windows: {
                 title: 'R&D Windows Software',
-                summary: 'Design of custom Windows tools, with a strong focus on stability and performance.',
-                impact: 'Concrete tools delivered for specific needs, then improved based on feedback.',
+                approach: ['Design of custom Windows tools, with a strong focus on stability and performance.'],
+                result: 'Concrete tools delivered for specific needs, then improved based on feedback.',
                 actionLabel: 'Discord',
-            }
-        ],
+            },
+        },
         crystal: {
             description: 'Project co-founded with Aurelien. We develop our own software and guide users on Discord.',
             shopBtn: 'Open the shop',
@@ -373,94 +392,70 @@ export const translations = {
                 },
             ]
         },
+        approach: {
+            title: 'How I work',
+            principles: [
+                {
+                    title: 'I start with what can break.',
+                    text: 'Before adding a feature, I look at what happens when it fails. If the Discord WebSocket drops, the site takes another route. If your browser blocks local storage, in private browsing for example, nothing crashes: your language choice just isn\'t remembered.',
+                },
+                {
+                    title: 'I check what it costs.',
+                    text: 'A pretty effect that makes a phone stutter isn\'t worth it. I removed blur from the entrance animations because it was too heavy on the GPU. The number of background particles depends on screen size, and they stop if your system asks for less motion.',
+                },
+                {
+                    title: 'I ship, then I fix.',
+                    text: 'Competitive gaming taught me that. On Fortnite, reaching the Unreal Top 1000 came from consistency, not one lucky run. I code the same way: a first version that works, feedback, then fixes.',
+                },
+            ],
+        },
         about: {
-            headingTitle: 'Timeline',
-            headingDesc: 'A simple summary of my journey and my progression in development.',
-            cardTitle: 'About',
-            cardTextExtra: 'My goal is simple: make clean, maintainable, and smooth interfaces, on both mobile and desktop.',
+            title: 'Background',
+            text: 'I learned to code through real projects: JavaScript and Node.js first, then React, plus some C and C++ for Windows tools. Alongside that, I\'m in the first year of an AEI degree (Administration and International Exchanges) at UPEC\'s International School, which has nothing to do with code.',
             timeline: [
                 {
-                    title: 'Personal web projects',
-                    description: 'Creation of personal React projects, with extensive UI testing on mobile and desktop.',
+                    period: 'Now',
+                    title: 'First year, AEI at UPEC',
+                    description: 'Administration and International Exchanges, at the International School. The projects keep going on the side.',
                 },
                 {
-                    title: 'Full-stack skills growth',
-                    description: 'Learning JavaScript, Node.js, APIs, and basic C through concrete projects.',
+                    period: '2024 → now',
+                    title: 'Personal React projects',
+                    description: 'React projects of my own, tested by hand on mobile and desktop.',
                 },
                 {
-                    title: 'Competitive gaming spirit',
-                    description: 'Gaming taught me to iterate quickly, analyze my mistakes, and stay consistent.',
-                }
-            ]
+                    period: '2023 → 2024',
+                    title: 'JavaScript, Node.js, C',
+                    description: 'I learned JavaScript, Node.js, APIs and basic C by building things that were actually used.',
+                },
+            ],
         },
-        gaming: {
-            headingTitle: 'Gaming',
-            headingDesc: 'Competitive gaming helped me develop useful reflexes for dev: analysis, adaptation, and execution.',
-            entries: [
-                {
-                    title: 'Overwatch',
-                    detail: 'Communication and quick decision-making in teams.',
-                },
-                {
-                    title: 'Fortnite',
-                    detail: 'Top 1000 Unreal reached, with a true focus on consistency.',
-                },
-                {
-                    title: 'Valorant',
-                    detail: 'Tactical game: game reading, info gathering, and decisions under pressure.',
-                },
-                {
-                    title: 'Forza Horizon 5',
-                    detail: 'Precision and regularity during long sessions.',
-                }
-            ]
-        },
-        community: {
-            headingTitle: 'Community',
-            headingDesc: 'My community background and past staff experiences across different servers.',
-            staffServers: 'Past Staff Experiences',
-            staffServersNote: 'Discord servers where I previously held staff and moderation roles.',
-            pastStaffRole: 'Past Staff',
-            teamFriends: 'Team / Friends',
-            members: [
-                {
-                    name: 'Aurelien',
-                    role: 'Software Developer - C, C++, C# (Co-Founder - Kronos Solution)',
-                    badges: ['Co-Founder - Kronos Solution'],
-                },
-                {
-                    name: 'Vardox',
-                    role: 'Full-Stack Web Developer & C/C++ Developer - React, Node.js, Tailwind, HTML/CSS',
-                    stats: 'Valorant Diamond - Fortnite Player',
-                    badges: ['Staff at Arp'],
-                },
-                {
-                    name: 'Wayp',
-                    role: 'Competitive Gamer & CRT Trader',
-                    stats: 'Fortnite Unreal Top 1000 - Sea of Thieves High Rank - CRT Trader',
-                }
-            ]
+        side: {
+            title: 'Away from the code',
+            intro: 'Competitive gaming and Discord moderation taught me things I use in dev: deciding fast, staying consistent, keeping calm with a lot of people around.',
+            gamesTitle: 'Games',
+            staffTitle: 'Former Discord staff',
+            staffNote: 'Servers where I was part of the moderation team.',
+            pastStaffRole: 'Former staff',
+            games: [
+                { title: 'Fortnite', detail: 'Reached the Unreal Top 1000, with a real focus on consistency.' },
+                { title: 'Valorant', detail: 'Reading the game, gathering info and deciding under pressure.' },
+                { title: 'Overwatch', detail: 'Communication and quick decisions as a team.' },
+                { title: 'Forza Horizon 5', detail: 'Precision and consistency over long sessions.' },
+            ],
         },
         contact: {
-            headingTitle: 'Contact',
-            headingDesc: 'The easiest way to contact me is through Discord. You will also find my social links just below.',
-            cardTitle: 'Let\'s discuss your project',
-            cardText: 'If you want to talk about collaborations, custom software, or partnerships, join me on Discord or through my social profiles.',
-        },
-        loader: {
-            loadingText: 'Loading portfolio',
+            title: 'Discord is the easiest way.',
+            text: 'To talk about a web project, a collaboration or one of my projects, join the server or message me directly.',
+            dm: 'Message me directly',
+            elsewhere: 'Elsewhere',
         },
         security: {
             warning: 'This console is for developers. If someone asked you to paste something here, it is a scam. Close this window.',
         },
         footer: {
-            desc: 'Developer passionate about modern web, C/C++ software, and interactive experiences.',
+            desc: 'Web interfaces in React, Windows tools in C and C++.',
+            rights: 'All rights reserved.',
         },
-        modal: {
-            title: 'Choose your language',
-            subtitle: 'Please select your preferred language for the site.',
-            fr: 'Français',
-            en: 'English',
-        }
-    }
+    },
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { FaPalette } from 'react-icons/fa';
 
 const ACCENTS = {
@@ -59,7 +59,7 @@ export default function AccentSwitcher() {
 
     return (
         <div className="fixed bottom-4 left-16 z-50 flex items-center gap-2">
-            <motion.button
+            <m.button
                 whileHover={{ scale: 1.06 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => setExpanded(!expanded)}
@@ -69,11 +69,11 @@ export default function AccentSwitcher() {
                 aria-label="Change theme color"
             >
                 <FaPalette className="text-xs" />
-            </motion.button>
+            </m.button>
 
             <AnimatePresence>
                 {expanded && (
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, x: -10, scale: 0.95 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: -10, scale: 0.95 }}
@@ -84,7 +84,7 @@ export default function AccentSwitcher() {
                             const info = ACCENTS[key];
                             const isActive = activeColor === key;
                             return (
-                                <motion.button
+                                <m.button
                                     key={key}
                                     whileHover={{ scale: 1.25 }}
                                     whileTap={{ scale: 0.9 }}
@@ -101,10 +101,10 @@ export default function AccentSwitcher() {
                                     {isActive && (
                                         <span className="w-1.5 h-1.5 rounded-full bg-black/40" />
                                     )}
-                                </motion.button>
+                                </m.button>
                             );
                         })}
-                    </motion.div>
+                    </m.div>
                 )}
             </AnimatePresence>
         </div>

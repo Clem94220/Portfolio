@@ -5,7 +5,11 @@ const RATE_PREFIX = 'rate:';
 const VISITOR_COOKIE = 'clem_vid';
 const CLIENT_HEADER_NAME = 'x-portfolio-client';
 const CLIENT_HEADER_VALUE = 'clem-frontend-v1';
+// Historique : le compteur stocké dans KV a démarré à 733 au lieu de 0.
+// On garde la valeur stockée telle quelle (pas de migration) et on retire ce décalage
+// à l'affichage, pour que le site montre le vrai nombre de visites.
 const DEFAULT_VIEW_SEED = 733;
+const DISPLAY_OFFSET = DEFAULT_VIEW_SEED;
 const SEEN_TTL_SECONDS = 60 * 60 * 24; // 24h
 const ACTIVE_TTL_SECONDS = 90;
 const RATE_TTL_SECONDS = 5; // 5s — hardened from 2s
@@ -220,7 +224,7 @@ async function createStatsResponse(kv, request, { incrementVisit }) {
     const activeNow = Math.max(1, await countActiveVisitors(kv));
 
     const response = jsonResponse({
-        totalViews,
+        totalViews: Math.max(0, totalViews - DISPLAY_OFFSET),
         activeNow,
         source: 'cloudflare-kv',
     }, request);

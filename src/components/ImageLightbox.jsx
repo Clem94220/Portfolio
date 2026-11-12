@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
 
 /**
@@ -10,6 +10,25 @@ import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
 export default function ImageLightbox({ images, index, onClose, onChange }) {
     const isOpen = index !== null && index >= 0 && index < images.length;
     const hasMany = images.length > 1;
+    const dialogRef = useRef(null);
+    const returnFocusRef = useRef(null);
+
+    // Accessibilité clavier : on mémorise l'élément qui a ouvert la visionneuse
+    // pour lui rendre le focus à la fermeture. La capture se fait au rendu, avant
+    // que l'autoFocus du bouton « Fermer » ne déplace le focus.
+    const wasOpenRef = useRef(false);
+    if (isOpen && !wasOpenRef.current && typeof document !== 'undefined') {
+        returnFocusRef.current = document.activeElement;
+    }
+    wasOpenRef.current = isOpen;
+
+    useEffect(() => {
+        if (!isOpen) return;
+        return () => {
+            const el = returnFocusRef.current;
+            if (el && typeof el.focus === 'function') el.focus({ preventScroll: true });
+        };
+    }, [isOpen]);
 
     const prev = () => onChange((index - 1 + images.length) % images.length);
     const next = () => onChange((index + 1) % images.length);
@@ -20,6 +39,22 @@ export default function ImageLightbox({ images, index, onClose, onChange }) {
         const handleKey = (event) => {
             if (event.key === 'Escape') {
                 onClose();
+            } else if (event.key === 'Tab' && dialogRef.current) {
+                // Le focus reste dans la visionneuse tant qu'elle est ouverte.
+                const focusables = [...dialogRef.current.querySelectorAll('button')];
+                if (focusables.length === 0) return;
+                const first = focusables[0];
+                const last = focusables[focusables.length - 1];
+                if (!dialogRef.current.contains(document.activeElement)) {
+                    event.preventDefault();
+                    first.focus();
+                } else if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
             } else if (hasMany && event.key === 'ArrowLeft') {
                 onChange((index - 1 + images.length) % images.length);
             } else if (hasMany && event.key === 'ArrowRight') {
@@ -42,8 +77,9 @@ export default function ImageLightbox({ images, index, onClose, onChange }) {
     return createPortal(
         <AnimatePresence>
             {current && (
-                <motion.div
+                <m.div
                     key="lightbox"
+                    ref={dialogRef}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -54,7 +90,7 @@ export default function ImageLightbox({ images, index, onClose, onChange }) {
                     aria-modal="true"
                     aria-label={current.alt}
                 >
-                    <motion.img
+                    <m.img
                         key={current.src}
                         src={current.src}
                         alt={current.alt}
@@ -98,7 +134,7 @@ export default function ImageLightbox({ images, index, onClose, onChange }) {
                             </span>
                         </>
                     )}
-                </motion.div>
+                </m.div>
             )}
         </AnimatePresence>,
         document.body

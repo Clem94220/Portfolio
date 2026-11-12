@@ -1,214 +1,113 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import {
-    SiC,
-    SiReact,
-    SiCplusplus,
-    SiJavascript,
-} from 'react-icons/si';
+import { SiC, SiReact, SiCplusplus, SiJavascript } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa6';
-import { PROOF_LINKS, SKILLS } from '../data/portfolioData';
+import { FaArrowRight, FaDiscord, FaGithub, FaInstagram, FaSpotify, FaSteam } from 'react-icons/fa';
+import { CONTACT_LINKS, DISCORD_DM_URL, PROOF_LINKS, SKILLS } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
-import LinkIcon from './LinkIcon';
 import LanyardCard from './LanyardCard';
-import SkillBadge from './SkillBadge';
-import DiscordJoinCard from './DiscordJoinCard';
 
-const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.12 } },
-};
+const ICON_MAP = { SiC, SiCplusplus, SiReact, FaJava, SiJavascript };
 
-const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
-};
+const linkOf = (icon) => CONTACT_LINKS.find((link) => link.icon === icon)?.url;
 
-function useTypingEffect(text, speed = 45, delay = 800) {
-    const [displayed, setDisplayed] = useState('');
-    const [done, setDone] = useState(false);
+// Tes profils, dans l'ordre où tu les as donnés. Discord ouvre ton profil (pas le serveur).
+const SOCIALS = [
+    { label: 'Discord', url: DISCORD_DM_URL, icon: FaDiscord, color: '#5865F2' },
+    { label: 'Instagram', url: linkOf('instagram'), icon: FaInstagram, color: '#E1306C' },
+    { label: 'Steam', url: linkOf('steam'), icon: FaSteam, color: '#C7D5E0' },
+    { label: 'Spotify', url: linkOf('spotify'), icon: FaSpotify, color: '#1DB954' },
+    { label: 'GitHub', url: PROOF_LINKS.github, icon: FaGithub, color: '#F2F3F5' },
+];
 
-    useEffect(() => {
-        setDisplayed('');
-        setDone(false);
-
-        let timeout;
-        let index = 0;
-
-        const startTyping = () => {
-            const type = () => {
-                if (index < text.length) {
-                    setDisplayed(text.slice(0, index + 1));
-                    index++;
-                    timeout = setTimeout(type, speed);
-                } else {
-                    setDone(true);
-                }
-            };
-            type();
-        };
-
-        timeout = setTimeout(startTyping, delay);
-        return () => clearTimeout(timeout);
-    }, [text, speed, delay]);
-
-    return { displayed, done };
-}
-
-const ICON_MAP = {
-    SiC,
-    SiCplusplus,
-    SiReact,
-    FaJava,
-    SiJavascript,
-};
-
-export default function HomeSection({ lanyard, lanyard2 }) {
+export default function HomeSection({ lanyard }) {
     const { t } = useTranslation();
-    const isExternal = (url) => url.startsWith('http');
-    const subtitle = useTypingEffect(t.profile.subtitle);
 
-    const translatedProofLinks = PROOF_LINKS.map(link => {
-        if (link.icon === 'project') {
-            return { ...link, label: t.profile.viewProjects };
-        }
-        return link;
-    });
+    const goToProjects = (event) => {
+        event.preventDefault();
+        document.getElementById('projects')?.scrollIntoView();
+    };
 
     return (
-        <div className="space-y-8 sm:space-y-10">
-            {/* Partie supérieure 1 : Badge et Titres */}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: '-60px' }}
-                className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 items-start"
-            >
-                <motion.div variants={item} className="space-y-6">
-                    <div className="flex flex-wrap items-center gap-2">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs uppercase tracking-wider text-txt-secondary">
-                            <span className="w-2 h-2 rounded-full bg-[var(--accent)] shadow-[0_0_8px_var(--accent-glow)]" />
-                            {t.profile.badge}
-                        </div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent)]/30 bg-[var(--accent-subtle)] text-xs font-mono text-txt-primary">
-                            <span>🎓</span>
-                            <span>AEI International School • UPEC</span>
-                        </div>
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-14 pt-16 sm:pt-24 pb-20 sm:pb-28">
+            <div className="lg:col-span-8">
+                <h1 className="type-display text-txt-primary hero-reveal">{t.hero.name}</h1>
 
-                    <div className="space-y-4">
-                        <div className="relative">
-                            <div
-                                className="absolute -inset-x-8 -inset-y-4 opacity-20 blur-3xl pointer-events-none"
-                                style={{ background: 'radial-gradient(ellipse at center, rgba(56,189,248,0.25), transparent 70%)' }}
-                            />
-                            <h1 className="relative text-4xl sm:text-6xl font-display font-bold tracking-tight silver-text-gradient">
-                                {t.profile.title}
-                            </h1>
-                        </div>
-                        <p className={`text-base sm:text-xl text-txt-secondary font-mono h-14 sm:h-8${!subtitle.done ? ' typing-cursor' : ''}`}>
-                            {subtitle.displayed}
-                        </p>
-                    </div>
-                </motion.div>
+                <p className="type-lead text-txt-primary mt-8 max-w-[30ch] hero-fade" style={{ '--delay': '0.3s' }}>
+                    {t.hero.lead}
+                </p>
 
-                <div className="hidden lg:block h-px" />
-            </motion.div>
+                <p className="prose-body mt-6 hero-fade" style={{ '--delay': '0.42s' }}>
+                    {t.hero.body}
+                </p>
 
-            {/* Partie supérieure 2 : Présentation & Premier Discord */}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: '-60px' }}
-                className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 items-start"
-            >
-                <motion.div variants={item} className="space-y-6">
-                    <div className="space-y-4">
-                        <p className="text-sm sm:text-base text-txt-secondary leading-relaxed">
-                            {t.profile.identity} {t.profile.studies}
-                        </p>
-                        <p className="text-sm sm:text-base text-txt-muted max-w-2xl leading-relaxed">
-                            {t.profile.summary}
-                        </p>
-                    </div>
+                <div className="mt-10 flex flex-wrap items-center gap-3 hero-fade" style={{ '--delay': '0.54s' }}>
+                    <a href="#projects" onClick={goToProjects} className="btn btn-primary">
+                        {t.hero.ctaProjects}
+                        <FaArrowRight className="btn-arrow text-xs" aria-hidden />
+                    </a>
+                    <a href={PROOF_LINKS.cv} className="btn btn-ghost">
+                        {t.hero.ctaCv}
+                    </a>
+                </div>
 
-                    <div className="max-w-md">
-                        <DiscordJoinCard />
-                    </div>
-
-                    <div className="flex flex-wrap gap-2.5">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                            {t.profile.location}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-white/10 bg-white/[0.02] text-txt-secondary font-mono">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
-                            {t.profile.availability}
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-[var(--accent)]/30 bg-[var(--accent-subtle)] text-txt-primary font-mono">
-                            <span>⚡</span>
-                            <span>Kronos Solution Co-Founder</span>
-                        </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                        {translatedProofLinks.map((link) => (
+                <ul
+                    className="mt-8 flex flex-wrap items-center gap-2 hero-fade"
+                    style={{ '--delay': '0.62s' }}
+                    aria-label={t.hero.socialsLabel}
+                >
+                    {SOCIALS.map(({ label, url, icon: Icon, color }) => (
+                        <li key={label}>
                             <a
-                                key={link.label}
-                                href={link.url}
-                                target={isExternal(link.url) ? '_blank' : undefined}
-                                rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
-                                className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border text-sm transition-all ${link.priority === 'primary'
-                                    ? 'bg-white text-black border-transparent hover:brightness-95 font-semibold'
-                                    : 'bg-transparent text-txt-secondary border-white/15 hover:text-txt-primary hover:border-white/30'
-                                    }`}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group inline-flex items-center gap-2 h-10 pl-3 pr-3.5 rounded-full border border-[var(--rule)] text-sm font-medium text-txt-secondary hover:text-txt-primary hover:border-[var(--social)] hover:bg-white/[0.04] transition-colors"
+                                style={{ '--social': color }}
                             >
-                                <LinkIcon name={link.icon} />
-                                {link.label}
+                                <Icon
+                                    aria-hidden
+                                    className="text-[15px] transition-colors duration-200 group-hover:text-[var(--social)]"
+                                />
+                                {label}
                             </a>
-                        ))}
-                    </div>
-                </motion.div>
+                        </li>
+                    ))}
+                </ul>
 
-                <motion.div variants={item} className="space-y-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-txt-muted font-mono">{t.common.discordPresence}</p>
+                <p className="type-label mt-8 hero-fade" style={{ '--delay': '0.7s' }}>
+                    {t.hero.meta}
+                </p>
+            </div>
+
+            <div className="lg:col-span-4 lg:pt-4 space-y-10 hero-fade" style={{ '--delay': '0.6s' }}>
+                <div>
+                    <p className="type-label mb-3">{t.hero.presenceLabel}</p>
                     <LanyardCard data={lanyard.data} loading={lanyard.loading} error={lanyard.error} />
-                </motion.div>
-            </motion.div>
+                </div>
 
-            {/* Partie inférieure : 5 Technos Clés et Deuxième Discord */}
-            <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: '-60px' }}
-                className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 items-start"
-            >
-                <motion.div variants={item} className="space-y-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-txt-muted font-mono">{t.stats.technologies}</p>
-                    <div className="flex flex-wrap gap-2.5">
+                <div>
+                    <p className="type-label mb-3">{t.hero.stackLabel}</p>
+                    <ul className="flex flex-wrap gap-x-5 gap-y-3">
                         {SKILLS.map((skill) => {
                             const Icon = ICON_MAP[skill.icon];
-                            if (!Icon) return null;
                             return (
-                                <SkillBadge
+                                <li
                                     key={skill.label}
-                                    icon={Icon}
-                                    label={skill.label}
-                                    color={skill.color}
-                                />
+                                    className="group inline-flex items-center gap-2 text-[0.9375rem] text-txt-secondary"
+                                >
+                                    {Icon && (
+                                        <Icon
+                                            aria-hidden
+                                            className="text-base text-txt-muted transition-colors duration-300 group-hover:text-[var(--skill)]"
+                                            style={{ '--skill': skill.color }}
+                                        />
+                                    )}
+                                    {skill.label}
+                                </li>
                             );
                         })}
-                    </div>
-                </motion.div>
-
-                <motion.div variants={item} className="space-y-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-txt-muted font-mono">{t.common.otherDiscordPresence}</p>
-                    <LanyardCard data={lanyard2.data} loading={lanyard2.loading} error={lanyard2.error} />
-                </motion.div>
-            </motion.div>
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 }

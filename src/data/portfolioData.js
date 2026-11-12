@@ -1,79 +1,33 @@
-/**
- * @typedef {Object} Project
- * @property {string} id
- * @property {string} title
- * @property {string} summary
- * @property {string[]} stack
- * @property {string} impact
- * @property {string} repoUrl
- * @property {'website'|'discord'|'demo'} actionType
- * @property {string} actionLabel
- * @property {string} actionUrl
- * @property {string} image
- */
+// Données du site (liens, images, stack). Tous les textes affichés vivent dans translations.js.
 
-/**
- * @typedef {Object} ProfileLink
- * @property {string} label
- * @property {string} url
- * @property {'github'|'cv'|'project'|'discord'|'instagram'|'steam'|'spotify'} icon
- * @property {'primary'|'secondary'} priority
- */
+/** @typedef {{ type: 'github'|'website'|'discord', url: string }} ProjectLink */
 
-/**
- * @typedef {Object} TimelineItem
- * @property {string} period
- * @property {string} title
- * @property {string} description
- * @property {string[]} tags
- */
-
-/** @type {{ title: string, subtitle: string, location: string, availability: string, summary: string, identity: string, studies: string }} */
-export const PROFILE = {
-    title: 'Clem',
-    subtitle: 'Developpeur web passionne, entre code et gaming competitif',
-    identity: 'Je m appelle Clement, j ai 18 ans.',
-    studies: 'Je suis actuellement etudiant en L1 AEI (Administration et Echanges Internationaux) a l UPEC (International School).',
-    location: 'France',
-    availability: 'Ouvert aux collaborations et projets web',
-    summary:
-        'J aime creer des interfaces simples, rapides et agreables a utiliser, avec du code propre et maintenable.',
+export const PROOF_LINKS = {
+    github: 'https://github.com/Clem94220?tab=repositories',
+    cv: '/assets/cv-clem.txt',
 };
 
-/** @type {ProfileLink[]} */
-export const PROOF_LINKS = [
-    { label: 'GitHub', url: 'https://github.com/Clem94220?tab=repositories', icon: 'github', priority: 'primary' },
-    { label: 'CV', url: '/assets/cv-clem.txt', icon: 'cv', priority: 'primary' },
-    { label: 'Voir les projets', url: '#projects', icon: 'project', priority: 'secondary' },
-];
-
-/** @type {Project[]} */
+/** Ordre d'affichage des projets ; les textes sont dans translations.projects[id]. */
 export const PROJECTS = [
     {
+        id: 'portfolio',
+        stack: ['React', 'Vite', 'Cloudflare Pages', 'Workers KV', 'WebSocket'],
+        // Vérifie que ce dépôt est public avant de mettre en ligne.
+        links: [{ type: 'github', url: 'https://github.com/Clem94220/Portfolio' }],
+    },
+    {
         id: 'crystal',
-        title: 'Kronos Solution',
-        summary:
-            'Projet monte avec Aurelien. On y propose nos logiciels et on gere le support via la communaute.',
-        stack: ['Community', 'Software', 'Support'],
-        impact: 'Mise en place du serveur, de l offre et du support client au quotidien.',
-        repoUrl: 'https://github.com/Clem94220?tab=repositories',
-        actionType: 'website',
-        actionLabel: 'Website',
-        actionUrl: 'https://crystal-solution.sellhub.cx/',
-        image: '/assets/logokronos.webp',
+        stack: ['Communauté', 'Logiciels', 'Support'],
+        mark: '/assets/logokronos.webp',
+        links: [
+            { type: 'website', url: 'https://crystal-solution.sellhub.cx/' },
+            { type: 'discord', url: 'https://discord.gg/evhpge7UCE' },
+        ],
     },
     {
         id: 'rd_windows',
-        title: 'R&D Logiciels Windows',
-        summary:
-            'Conception d outils Windows sur mesure, avec un gros focus sur la stabilite et les performances.',
         stack: ['C++', 'Python', 'Reverse Engineering'],
-        impact: 'Des outils concrets livres pour des besoins precis, puis ameliores selon les retours.',
-        repoUrl: 'https://github.com/Clem94220?tab=repositories',
-        actionType: 'discord',
-        actionLabel: 'Discord',
-        actionUrl: 'https://discord.gg/evhpge7UCE',
-        image: 'https://i.pinimg.com/736x/93/d8/04/93d8043b3c06807022c0390b3dfb4017.jpg',
+        links: [{ type: 'discord', url: 'https://discord.gg/evhpge7UCE' }],
     },
 ];
 
@@ -191,31 +145,6 @@ export const PAYMENT_METHODS = {
     ],
 };
 
-/** @type {TimelineItem[]} */
-export const TIMELINE = [
-    {
-        period: '2024 - Aujourd hui',
-        title: 'Projets web perso',
-        description:
-            'Creation de projets React perso, avec beaucoup de tests UI sur mobile et desktop.',
-        tags: ['React', 'HTML', 'CSS', 'UI', 'Performance'],
-    },
-    {
-        period: '2023 - 2024',
-        title: 'Montee en competence full-stack',
-        description:
-            'Apprentissage de JavaScript, Node.js, API et bases en C sur des projets concrets.',
-        tags: ['JavaScript', 'Node.js', 'API', 'C'],
-    },
-    {
-        period: 'Continu',
-        title: 'Esprit competitif gaming',
-        description:
-            'Le gaming m a appris a iterer vite, analyser mes erreurs et rester regulier.',
-        tags: ['Rigueur', 'Execution', 'Iteration'],
-    },
-];
-
 export const SKILLS = [
     { icon: 'SiC', label: 'C', color: '#A8B9CC' },
     { icon: 'SiCplusplus', label: 'C++', color: '#659AD2' },
@@ -224,30 +153,13 @@ export const SKILLS = [
     { icon: 'SiJavascript', label: 'JavaScript', color: '#F7DF1E' },
 ];
 
-export const GAMING = [
-    {
-        title: 'Overwatch',
-        detail: 'Communication et prise de decision rapide en equipe.',
-        image: '/assets/overwatch.webp',
-    },
-    {
-        title: 'Fortnite',
-        detail: 'Top 1000 Unreal atteint, avec un vrai focus sur la constance.',
-        image: '/assets/fortnite.webp',
-    },
-    {
-        title: 'Valorant',
-        detail: 'Jeu tactique: lecture du jeu, info et decisions sous pression.',
-        image: '/assets/valorant.webp',
-    },
-    {
-        title: 'Forza Horizon 5',
-        detail: 'Precision et regularite sur des sessions longues.',
-        image: '/assets/forza.webp',
-    },
-];
+export const GAME_ICONS = {
+    Fortnite: '/assets/fortnite.webp',
+    Valorant: '/assets/valorant.webp',
+    Overwatch: '/assets/overwatch.webp',
+    'Forza Horizon 5': '/assets/forza.webp',
+};
 
-/** @type {ProfileLink[]} */
 export const CONTACT_LINKS = [
     { label: 'Discord', url: 'https://discord.gg/evhpge7UCE', icon: 'discord', priority: 'primary' },
     { label: 'Spotify', url: 'https://open.spotify.com/user/31nasvp5d3r2h2n2ivecywukzmje', icon: 'spotify', priority: 'secondary' },

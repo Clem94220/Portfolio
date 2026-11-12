@@ -28,7 +28,9 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks(id) {
-                    if (id.includes('framer-motion')) return 'framer';
+                    // framer-motion n'a pas de chunk forcé : son cœur reste léger dans le bundle
+                    // principal et ses fonctionnalités (lib/motionFeatures) partent en chunk différé.
+                    if (/framer-motion|motion-dom|motion-utils/.test(id)) return undefined;
                     if (id.includes('react-icons')) return 'icons';
                     if (id.includes('node_modules')) return 'vendor';
                 },

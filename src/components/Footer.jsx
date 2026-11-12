@@ -1,106 +1,52 @@
-import { FaDiscord, FaGithub, FaInstagram, FaSpotify, FaSteam, FaTerminal } from 'react-icons/fa';
+import { FaDiscord, FaGithub, FaInstagram, FaSpotify, FaSteam } from 'react-icons/fa';
+import { CONTACT_LINKS, PROOF_LINKS } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
 
-const SOCIAL_LINKS = [
-    { icon: FaDiscord, href: 'https://discord.gg/evhpge7UCE', label: 'Discord' },
-    { icon: FaSpotify, href: 'https://open.spotify.com/user/31nasvp5d3r2h2n2ivecywukzmje', label: 'Spotify' },
-    { icon: FaInstagram, href: 'https://www.instagram.com/clem94_220', label: 'Instagram' },
-    { icon: FaSteam, href: 'https://steamcommunity.com/id/947616406464/', label: 'Steam' },
-    { icon: FaGithub, href: 'https://github.com/Clem94220?tab=repositories', label: 'GitHub' },
-];
+const ICONS = { discord: FaDiscord, spotify: FaSpotify, instagram: FaInstagram, steam: FaSteam, github: FaGithub };
 
-export default function Footer() {
-    const { t } = useTranslation();
+export default function Footer({ totalViews, activeNow }) {
+    const { t, language } = useTranslation();
+    const fmt = (n) => (n ?? 0).toLocaleString(language === 'en' ? 'en-US' : 'fr-FR');
     const year = new Date().getFullYear();
-
-    const NAV_LINKS = [
-        { label: t.nav.home, href: '#home' },
-        { label: t.nav.projects, href: '#projects' },
-        { label: t.nav.crystal, href: '#crystal' },
-        { label: t.nav.gaming, href: '#gaming' },
-        { label: t.nav.contact, href: '#contact' },
-    ];
-
-    const handleNavClick = (e, href) => {
-        e.preventDefault();
-        const el = document.querySelector(href);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-    };
+    const socials = [...CONTACT_LINKS, { label: 'GitHub', url: PROOF_LINKS.github, icon: 'github' }];
 
     return (
-        <footer className="relative border-t border-white/10">
-            <div
-                className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px"
-                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }}
-            />
+        <footer className="pb-24 sm:pb-16">
+            <div className="max-w-page mx-auto px-4 sm:px-8 pt-10 flex flex-col gap-6">
+                <div>
+                    <p className="font-extrabold text-lg text-txt-primary" style={{ fontStretch: '125%' }}>
+                        Clément
+                    </p>
+                    <p className="text-sm text-txt-muted mt-1">{t.footer.desc}</p>
+                    {/* Sur mobile, le compteur flottant est masqué pour ne pas couvrir le texte : il vit ici. */}
+                    <p className="sm:hidden type-data text-txt-muted mt-4 inline-flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" aria-hidden />
+                        {t.common.live} · {fmt(totalViews)} {t.ui.views.toLowerCase()} · {fmt(activeNow)} {t.ui.active.toLowerCase()}
+                    </p>
+                    <p className="type-data text-txt-muted mt-4">
+                        © {year} Clément · {t.footer.rights}
+                    </p>
+                </div>
 
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
-                    <div className="space-y-3">
-                        <h3 className="text-lg font-display font-bold silver-text-gradient">Clem</h3>
-                        <p className="text-xs text-txt-muted leading-relaxed max-w-xs">
-                            {t.footer.desc}
-                        </p>
-                        <div className="flex items-center gap-1.5 mt-2">
-                            <FaTerminal className="text-[10px] text-txt-muted" />
-                            <span className="text-[10px] font-mono text-txt-muted tracking-wider">
-                                SYSTEM.STATUS: <span className="text-[var(--green)]">{t.common.systemStatus}</span>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="space-y-3">
-                        <h4 className="text-xs uppercase tracking-[0.2em] font-display text-txt-secondary">Navigation</h4>
-                        <nav className="flex flex-col gap-1.5">
-                            {NAV_LINKS.map((link) => (
+                <ul className="flex flex-wrap gap-2">
+                    {socials.map((social) => {
+                        const Icon = ICONS[social.icon];
+                        return (
+                            <li key={social.label}>
                                 <a
-                                    key={link.label}
-                                    href={link.href}
-                                    onClick={(e) => handleNavClick(e, link.href)}
-                                    className="text-sm text-txt-muted hover:text-txt-primary transition-colors w-fit"
-                                >
-                                    {link.label}
-                                </a>
-                            ))}
-                        </nav>
-                    </div>
-
-                    <div className="space-y-3">
-                        <h4 className="text-xs uppercase tracking-[0.2em] font-display text-txt-secondary">Connexions</h4>
-                        <div className="flex flex-wrap gap-2">
-                            {SOCIAL_LINKS.map((social) => (
-                                <a
-                                    key={social.label}
-                                    href={social.href}
+                                    href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 text-txt-muted hover:text-txt-primary hover:border-white/25 transition-all"
                                     aria-label={social.label}
                                     title={social.label}
+                                    className="w-11 h-11 rounded-lg flex items-center justify-center border border-[var(--rule)] text-txt-muted hover:text-txt-primary hover:border-[var(--accent)] transition-colors"
                                 >
-                                    <social.icon className="text-sm" />
+                                    <Icon aria-hidden className="text-base" />
                                 </a>
-                            ))}
-                        </div>
-                        <a
-                            href="https://crystal-solution.sellhub.cx/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs text-txt-muted hover:text-txt-primary transition-colors"
-                        >
-                            Crystal Solution &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <div className="pt-5 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-2">
-                    <p className="text-[11px] text-txt-muted font-mono">
-                        &copy; {year} Clem. All rights reserved.
-                    </p>
-                    <p className="text-[10px] text-txt-muted font-mono tracking-wider opacity-50">
-                        v1.0.0 // BUILT WITH REACT + VITE
-                    </p>
-                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
         </footer>
     );

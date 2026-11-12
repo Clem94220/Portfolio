@@ -11,7 +11,8 @@ const REMOTE_STATS_ENDPOINT = '/api/views';
 const REMOTE_CLIENT_HEADER = 'clem-frontend-v1';
 const HEARTBEAT_INTERVAL_MS = 15000; // 15 seconds
 const ACTIVE_WINDOW_MS = 60000;
-const VIEW_SEED = 733;
+// Plus de chiffre de départ gonflé : le compteur affiche les vraies visites.
+const VIEW_SEED = 0;
 const BUCKET_INDEX_KEY = `${STORAGE_PREFIX}_active_index`;
 
 function getStorage() {

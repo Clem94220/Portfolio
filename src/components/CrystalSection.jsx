@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import {
     FaDiscord,
     FaShoppingBag,
@@ -88,90 +88,75 @@ export default function CrystalSection() {
             />
 
             {/* ── 1. Hero Showcase Card ── */}
-            <motion.div
+            <m.div
                 variants={item}
-                initial="hidden"
+                initial={false}
                 whileInView="show"
                 viewport={{ once: true }}
-                className="crystal-card p-6 sm:p-8 relative overflow-hidden"
-                style={{
-                    boxShadow: '0 0 50px var(--accent-subtle), 0 4px 30px rgba(0, 0, 0, 0.6)',
-                }}
+                className="surface p-6 sm:p-8"
             >
-                <div
-                    className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl pointer-events-none opacity-25"
-                    style={{ background: 'radial-gradient(circle, var(--accent), transparent)' }}
-                />
 
                 <div className="relative z-10 space-y-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-                        <div className="flex items-center gap-4">
-                            <div className="relative">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 min-w-0">
+                            <div className="relative shrink-0">
                                 <img
                                     src={CRYSTAL.icon}
                                     alt="Kronos Solution"
-                                    className="w-16 h-16 rounded-2xl object-cover ring-2 ring-white/10"
+                                    className="w-16 h-16 rounded-2xl object-cover"
                                     loading="lazy"
                                     decoding="async"
                                 />
                                 <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--green)] border-2 border-black" />
                             </div>
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <h3 className="text-2xl sm:text-3xl font-display font-bold text-txt-primary">
-                                        {CRYSTAL.title}
-                                    </h3>
-                                    <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest rounded border border-white/20 text-txt-secondary">
+                            <div className="min-w-0">
+                                <div className="flex flex-wrap items-center gap-2">
+                                    <span className="chip text-xs">
                                         Studio &amp; Shop
                                     </span>
-                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] uppercase font-mono tracking-widest rounded border border-[var(--green)]/40 bg-[var(--green)]/10 text-[var(--green)]">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)] animate-pulse" />
+                                    <span className="chip text-xs !text-[var(--green)] !border-[var(--green)]/40">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" aria-hidden="true" />
                                         Undetected
                                     </span>
                                 </div>
-                                <p className="text-sm text-txt-secondary mt-1 max-w-xl">
+                                <p className="text-txt-secondary mt-3 max-w-xl [overflow-wrap:anywhere]">
                                     {t.crystal?.description || CRYSTAL.description}
                                 </p>
                             </div>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3">
-                            <motion.a
+                            <m.a
                                 href={CRYSTAL.shopUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                whileHover={{ scale: 1.04, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center gap-2.5 rounded-xl bg-white text-black px-5 py-2.5 text-sm font-bold font-display uppercase tracking-wider hover:brightness-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                                className="btn btn-primary"
                             >
-                                <FaShoppingBag className="text-sm" />
+                                <FaShoppingBag aria-hidden="true" className="text-sm" />
                                 {t.crystal?.shopBtn || 'Boutique'}
-                            </motion.a>
-                            <motion.a
+                            </m.a>
+                            <m.a
                                 href={CRYSTAL.discordUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                whileHover={{ scale: 1.04, y: -2 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-txt-secondary hover:text-txt-primary hover:border-white/40 transition-colors bg-white/[0.02]"
+                                className="btn btn-ghost"
                             >
-                                <FaDiscord className="text-base text-[#5865f2]" />
+                                <FaDiscord aria-hidden="true" className="text-base text-[#5865f2]" />
                                 Discord
-                            </motion.a>
+                            </m.a>
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* ── Aperçu du loader ── */}
             <div className="space-y-4">
-                <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                <h3 className="type-h3 text-txt-primary">
                     {language === 'en' ? 'Loader preview' : 'Aperçu du loader'}
                 </h3>
-                <motion.div
+                <m.div
                     variants={container}
-                    initial="hidden"
+                    initial={false}
                     whileInView="show"
                     viewport={{ once: true }}
                     className="grid grid-cols-1 sm:grid-cols-2 gap-4"
@@ -179,12 +164,12 @@ export default function CrystalSection() {
                     {CRYSTAL_SCREENSHOTS.map((shot, index) => {
                         const caption = language === 'en' ? shot.en : shot.fr;
                         return (
-                            <motion.button
+                            <m.button
                                 type="button"
                                 key={shot.src}
                                 variants={item}
                                 onClick={() => openLightbox('shots', index)}
-                                className="crystal-card overflow-hidden group block w-full text-left cursor-zoom-in border border-white/10 hover:border-white/25 transition-colors"
+                                className="surface overflow-hidden group block w-full text-left cursor-zoom-in transition-colors hover:border-[var(--border-highlight)]"
                             >
                                 <img
                                     src={shot.src}
@@ -193,11 +178,11 @@ export default function CrystalSection() {
                                     loading="lazy"
                                     decoding="async"
                                 />
-                                <p className="px-4 py-2.5 text-xs font-mono text-txt-secondary">{caption}</p>
-                            </motion.button>
+                                <p className="px-4 py-3 text-sm text-txt-secondary">{caption}</p>
+                            </m.button>
                         );
                     })}
-                </motion.div>
+                </m.div>
             </div>
 
             <ImageLightbox
@@ -209,29 +194,28 @@ export default function CrystalSection() {
 
             {/* ── Avis clients ── */}
             <div className="space-y-4">
-                <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
+                <h3 className="type-h3 text-txt-primary">
                     {language === 'en' ? 'Customer vouches' : 'Avis clients'}
                 </h3>
-                <p className="text-sm text-txt-muted max-w-2xl">
+                <p className="text-txt-muted max-w-2xl -mt-1">
                     {language === 'en'
                         ? 'Real vouches posted by customers in the Discord. Click an image to enlarge it.'
                         : 'De vrais avis postés par les clients sur le Discord. Clique sur une image pour l’agrandir.'}
                 </p>
-                <motion.div
+                <m.div
                     variants={container}
-                    initial="hidden"
+                    initial={false}
                     whileInView="show"
                     viewport={{ once: true }}
                     className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
                 >
                     {CRYSTAL_VOUCHES.map((vouch, index) => (
-                        <motion.button
+                        <m.button
                             type="button"
                             key={vouch.src}
                             variants={item}
                             onClick={() => openLightbox('vouches', index)}
-                            className="crystal-card overflow-hidden block w-full cursor-zoom-in border border-white/10 hover:border-white/25 transition-colors"
+                            className="surface overflow-hidden block w-full cursor-zoom-in transition-colors hover:border-[var(--border-highlight)]"
                         >
                             <img
                                 src={vouch.src}
@@ -240,23 +224,22 @@ export default function CrystalSection() {
                                 loading="lazy"
                                 decoding="async"
                             />
-                        </motion.button>
+                        </m.button>
                     ))}
-                </motion.div>
+                </m.div>
             </div>
 
             {/* ── 2. Offres & Produits Disponibles (Cartes Sombres / Néon) ── */}
             <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                    <h3 className="type-h3 text-txt-primary">
                         {t.common?.catalog || 'Nos Offres & Produits'}
                     </h3>
                 </div>
 
-                <motion.div
+                <m.div
                     variants={container}
-                    initial="hidden"
+                    initial={false}
                     whileInView="show"
                     viewport={{ once: true }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5"
@@ -264,39 +247,33 @@ export default function CrystalSection() {
                     {offersList.map((offer) => {
                         const Icon = OFFER_ICONS[offer.id] || FaShieldAlt;
                         return (
-                            <motion.article
+                            <m.article
                                 key={offer.id || offer.title}
                                 variants={item}
-                                whileHover={{ y: -4, scale: 1.01 }}
-                                className="crystal-card p-6 relative overflow-hidden group border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between"
+                                className="surface p-6 flex flex-col justify-between transition-colors hover:border-[var(--border-highlight)]"
                             >
-                                <div
-                                    className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                                    style={{ background: offer.badgeColor || '#00f0ff' }}
-                                />
 
                                 <div className="relative z-10 space-y-4">
-                                    <div className="flex items-center justify-between gap-3">
+                                    <div className="flex flex-wrap items-center justify-between gap-3">
                                         <div className="flex items-center gap-3">
                                             <div
-                                                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform"
+                                                className="w-10 h-10 rounded-xl flex items-center justify-center border border-white/10 shrink-0"
                                                 style={{ background: 'rgba(255, 255, 255, 0.04)' }}
                                             >
-                                                <Icon className="text-lg text-txt-primary" />
+                                                <Icon aria-hidden="true" className="text-lg text-txt-primary" />
                                             </div>
-                                            <h4 className="text-base font-bold font-display text-txt-primary">
+                                            <h4 className="text-lg font-semibold text-txt-primary leading-snug">
                                                 {offer.title}
                                             </h4>
                                         </div>
 
                                         {offer.badge && (
                                             <span
-                                                className="text-[11px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border"
+                                                className="text-xs font-semibold px-2.5 py-1 rounded-full border"
                                                 style={{
                                                     background: 'rgba(255, 255, 255, 0.03)',
                                                     borderColor: offer.badgeColor ? `${offer.badgeColor}40` : 'rgba(255,255,255,0.2)',
                                                     color: offer.badgeColor || 'var(--accent)',
-                                                    boxShadow: offer.badgeColor ? `0 0 10px ${offer.badgeColor}22` : 'none',
                                                 }}
                                             >
                                                 {offer.badge}
@@ -304,7 +281,7 @@ export default function CrystalSection() {
                                         )}
                                     </div>
 
-                                    <p className="text-sm leading-relaxed text-txt-secondary">
+                                    <p className="leading-relaxed text-txt-secondary">
                                         {offer.description}
                                     </p>
 
@@ -321,45 +298,41 @@ export default function CrystalSection() {
                                         </div>
                                     )}
                                 </div>
-                            </motion.article>
+                            </m.article>
                         );
                     })}
-                </motion.div>
+                </m.div>
             </div>
 
             {/* ── 3. Tarification Flexible & Formules ── */}
-            <motion.div
+            <m.div
                 variants={item}
-                initial="hidden"
+                initial={false}
                 whileInView="show"
                 viewport={{ once: true }}
-                className="crystal-card p-6 sm:p-7 relative overflow-hidden border border-white/10"
-                style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 100%)',
-                }}
+                className="surface p-6 sm:p-7"
             >
                 <div className="relative z-10 space-y-4">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="space-y-1.5">
                             <div className="flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
-                                <h3 className="text-sm font-bold font-display uppercase tracking-widest text-txt-primary">
+                                                                <h3 className="text-xl font-semibold text-txt-primary">
                                     {t.crystal?.pricingTitle || 'Tarification Flexible'}
                                 </h3>
                             </div>
-                            <p className="text-sm text-txt-secondary max-w-2xl leading-relaxed">
+                            <p className="text-txt-secondary max-w-2xl leading-relaxed mt-1">
                                 {t.crystal?.pricingDescription ||
                                     'Les prix sont flexibles et s adaptent à votre demande, aux options choisies et au type de produit.'}
                             </p>
                         </div>
 
-                        <span className="inline-flex items-center self-start sm:self-auto px-3 py-1.5 rounded-xl border border-white/15 bg-white/[0.04] text-xs font-mono text-txt-primary whitespace-nowrap">
+                        <span className="self-start sm:self-auto text-sm text-txt-primary sm:max-w-[22rem] sm:text-right">
                             {t.crystal?.pricingStarting || 'Clés disponibles dès 5€'}
                         </span>
                     </div>
 
                     <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <span className="text-xs uppercase font-mono text-txt-muted tracking-wider">
+                        <span className="type-label">
                             {language === 'en' ? 'Available Durations :' : 'Durées & Formules :'}
                         </span>
                         <div className="flex flex-wrap gap-2">
@@ -374,15 +347,15 @@ export default function CrystalSection() {
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </m.div>
 
             {/* ── Une question ? ── */}
-            <div className="crystal-card p-6 sm:p-7 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="surface p-6 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                    <h3 className="text-sm font-bold font-display uppercase tracking-widest text-txt-primary">
+                    <h3 className="text-xl font-semibold text-txt-primary">
                         {language === 'en' ? 'Got a question?' : 'Une question ?'}
                     </h3>
-                    <p className="text-sm text-txt-secondary max-w-xl leading-relaxed">
+                    <p className="text-txt-secondary max-w-xl leading-relaxed">
                         {language === 'en'
                             ? 'Send me a DM on Discord or open a ticket in the server, I answer as soon as I can.'
                             : 'Envoie-moi un DM sur Discord ou ouvre un ticket sur le serveur, je réponds dès que possible.'}
@@ -393,16 +366,16 @@ export default function CrystalSection() {
                         href={DISCORD_DM_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] text-white px-4 py-2.5 text-sm font-bold font-display uppercase tracking-wider transition-colors"
+                        className="btn btn-primary"
                     >
-                        <FaDiscord className="text-base" />
+                        <FaDiscord aria-hidden="true" className="text-base" />
                         {language === 'en' ? 'DM me' : 'Me DM'}
                     </a>
                     <a
                         href={DISCORD_TICKET_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-txt-secondary hover:text-txt-primary hover:border-white/40 transition-colors"
+                        className="btn btn-ghost"
                     >
                         {language === 'en' ? 'Open a ticket' : 'Ouvrir un ticket'}
                     </a>
@@ -412,8 +385,7 @@ export default function CrystalSection() {
             {/* ── 4. Moyens de Paiement (Séparation Distincte PayPal & Cryptos) ── */}
             <div className="space-y-6">
                 <div className="space-y-1">
-                    <h3 className="text-xs uppercase tracking-[0.25em] font-display text-txt-secondary flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
+                    <h3 className="type-h3 text-txt-primary">
                         {t.common?.acceptedPayments || 'Moyens de paiement acceptés'}
                     </h3>
                 </div>
@@ -421,8 +393,8 @@ export default function CrystalSection() {
                 {/* PayPal Section */}
                 <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                        <FaPaypal className="text-sm text-[#0079C1]" />
-                        <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-txt-muted">
+                        <FaPaypal aria-hidden="true" className="text-sm text-[#0079C1]" />
+                        <h4 className="type-label">
                             {t.common?.paypalPayments || 'PayPal'}
                         </h4>
                     </div>
@@ -445,15 +417,15 @@ export default function CrystalSection() {
                 {/* Cryptomonnaies Section */}
                 <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                        <FaCoins className="text-sm text-[#F7931A]" />
-                        <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-txt-muted">
+                        <FaCoins aria-hidden="true" className="text-sm text-[#F7931A]" />
+                        <h4 className="type-label">
                             {t.common?.cryptoPayments || 'Cryptomonnaies'} (BTC, ETH, LTC)
                         </h4>
                     </div>
 
-                    <motion.div
+                    <m.div
                         variants={container}
-                        initial="hidden"
+                        initial={false}
                         whileInView="show"
                         viewport={{ once: true }}
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
@@ -461,7 +433,7 @@ export default function CrystalSection() {
                         {PAYMENT_METHODS.crypto.map((method) => {
                             const iconData = CRYPTO_ICONS[method.key];
                             return (
-                                <motion.div key={method.name} variants={item}>
+                                <m.div key={method.name} variants={item}>
                                     <PaymentCard
                                         icon={iconData?.icon}
                                         color={iconData?.color}
@@ -470,10 +442,10 @@ export default function CrystalSection() {
                                         copyValue={method.copyValue}
                                         link={method.link}
                                     />
-                                </motion.div>
+                                </m.div>
                             );
                         })}
-                    </motion.div>
+                    </m.div>
                 </div>
             </div>
         </div>

@@ -1,200 +1,122 @@
-import { useRef, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { FaExternalLinkAlt, FaGithub, FaDiscord, FaGlobe } from 'react-icons/fa';
-import { CRYSTAL, PROJECTS } from '../data/portfolioData';
+import { FaArrowRight, FaDiscord, FaGithub, FaGlobe } from 'react-icons/fa';
+import { PROJECTS } from '../data/portfolioData';
 import { useTranslation } from '../contexts/LanguageContext';
 import SectionHeading from './SectionHeading';
 
-const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+const LINK_META = {
+    github: { icon: FaGithub, label: (t) => t.common.repo },
+    website: { icon: FaGlobe, label: (t, p) => p.actionLabel || t.common.website },
+    discord: { icon: FaDiscord, label: () => 'Discord' },
 };
 
-const item = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-};
+function Story({ label, children }) {
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-[11rem_1fr] gap-x-8 gap-y-2 py-5 rule-top">
+            <dt className="type-label pt-0.5">{label}</dt>
+            <dd className="text-txt-secondary max-w-measure">{children}</dd>
+        </div>
+    );
+}
 
-function ProjectCard({ project }) {
-    const cardRef = useRef(null);
-    const rafRef = useRef(null);
-    const tiltDataRef = useRef({ rX: 0, rY: 0 });
+function ProjectCase({ project, copy, labels, featured }) {
     const { t } = useTranslation();
-
-    const handleMouseMove = useCallback((event) => {
-        const card = cardRef.current;
-        if (!card) return;
-
-        const rect = card.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left - rect.width / 2;
-        const mouseY = event.clientY - rect.top - rect.height / 2;
-
-        tiltDataRef.current.rX = -(mouseY / (rect.height / 2)) * 5;
-        tiltDataRef.current.rY = (mouseX / (rect.width / 2)) * 5;
-
-        if (rafRef.current === null) {
-            rafRef.current = requestAnimationFrame(() => {
-                const el = cardRef.current;
-                if (el) {
-                    const { rX, rY } = tiltDataRef.current;
-                    el.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) scale3d(1.02,1.02,1.02)`;
-                    el.style.zIndex = '20';
-                }
-                rafRef.current = null;
-            });
-        }
-    }, []);
-
-    const handleMouseLeave = useCallback(() => {
-        if (rafRef.current) {
-            cancelAnimationFrame(rafRef.current);
-            rafRef.current = null;
-        }
-        const el = cardRef.current;
-        if (el) {
-            el.style.transition = 'transform 0.4s ease-out';
-            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-            el.style.zIndex = '';
-            setTimeout(() => {
-                if (el) el.style.transition = '';
-            }, 400);
-        }
-    }, []);
-
-    // Action button setup (Website or Discord)
-    const isDiscordAction = project.actionType === 'discord';
-    const ActionIcon = isDiscordAction ? FaDiscord : FaGlobe;
-    const actionLabel = project.actionLabel || (isDiscordAction ? t.common.discordInvite : t.common.website);
+    const approach = Array.isArray(copy.approach) ? copy.approach : [copy.approach].filter(Boolean);
 
     return (
-        <motion.article
-            ref={cardRef}
-            variants={item}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="crystal-card shine-card overflow-hidden h-full flex flex-col justify-between"
-        >
-            <div>
-                <div className="h-40 overflow-hidden border-b border-white/10 bg-black/30 relative">
-                    <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover opacity-85 hover:opacity-100 transition-opacity duration-300"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                        }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+        <article className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-8">
+            <header className="lg:col-span-4 lg:sticky lg:top-[calc(var(--header-h)+2rem)] self-start">
+                <div className="flex items-center gap-3">
+                    {project.mark && (
+                        <img
+                            src={project.mark}
+                            alt=""
+                            className="w-9 h-9 rounded-lg object-cover"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                    )}
+                    <h3 className={`type-h3 text-txt-primary ${featured ? 'lg:text-[2.125rem]' : ''}`}>
+                        {copy.title}
+                    </h3>
                 </div>
 
-                <div className="p-5 sm:p-6 space-y-4">
-                    <div className="space-y-2">
-                        <h3 className="text-xl font-display font-bold text-txt-primary">{project.title}</h3>
-                        <p className="text-sm text-txt-secondary leading-relaxed">{project.summary}</p>
-                    </div>
+                <p className="type-data text-txt-muted mt-4 leading-relaxed">
+                    <span className="sr-only">{labels.stack} : </span>
+                    {project.stack.join(' · ')}
+                </p>
 
-                    <div className="flex flex-wrap gap-2">
-                        {project.stack.map((tech) => (
-                            <span
-                                key={tech}
-                                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-mono border border-white/10 bg-white/[0.02] text-txt-secondary"
-                            >
-                                {tech}
-                            </span>
-                        ))}
-                    </div>
-
-                    <p className="text-xs text-txt-muted font-mono">{project.impact}</p>
-                </div>
-            </div>
-
-            <div className="p-5 sm:p-6 pt-0 mt-auto flex gap-3">
-                {/* Button 1: GitHub Repo */}
-                <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-4 py-2.5 text-xs sm:text-sm font-semibold text-txt-secondary hover:text-txt-primary hover:border-white/35 bg-white/[0.02] hover:bg-white/[0.06] transition-all"
-                >
-                    <FaGithub className="text-sm sm:text-base" />
-                    {t.common?.repo || 'GitHub'}
-                </a>
-
-                {/* Discord en plus du site pour les projets web */}
-                {!isDiscordAction && project.discordUrl && (
-                    <a
-                        href={project.discordUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Discord"
-                        className="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold bg-[#5865F2] hover:bg-[#4752c4] text-white shadow-[0_0_16px_rgba(88,101,242,0.3)] transition-all"
-                    >
-                        <FaDiscord className="text-sm sm:text-base" />
-                        <span className="hidden sm:inline">Discord</span>
-                    </a>
+                {project.links?.length > 0 && (
+                    <ul className="mt-4 flex flex-wrap gap-x-6">
+                        {project.links.map((link) => {
+                            const meta = LINK_META[link.type];
+                            const Icon = meta.icon;
+                            return (
+                                <li key={link.url + link.type}>
+                                    <a
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-center gap-2 min-h-[44px] text-[0.9375rem] font-medium text-txt-primary hover:text-accent-strong transition-colors"
+                                    >
+                                        <Icon aria-hidden className="text-sm text-txt-muted group-hover:text-current transition-colors" />
+                                        {meta.label(t, copy)}
+                                        <FaArrowRight
+                                            aria-hidden
+                                            className="text-[10px] -rotate-45 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                        />
+                                    </a>
+                                </li>
+                            );
+                        })}
+                    </ul>
                 )}
+            </header>
 
-                {/* Button 2: Website (Crystal) or Discord (R&D) */}
-                <a
-                    href={project.actionUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex-1 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-bold font-display uppercase tracking-wider transition-all ${
-                        isDiscordAction
-                            ? 'bg-[#5865F2] hover:bg-[#4752c4] text-white shadow-[0_0_16px_rgba(88,101,242,0.3)]'
-                            : 'bg-white hover:brightness-95 text-black shadow-[0_0_16px_rgba(255,255,255,0.2)]'
-                    }`}
-                >
-                    <ActionIcon className="text-sm sm:text-base" />
-                    {actionLabel}
-                </a>
-            </div>
-        </motion.article>
+            <dl className="lg:col-span-8">
+                {copy.problem && <Story label={labels.problem}>{copy.problem}</Story>}
+                {approach.length > 0 && (
+                    <Story label={labels.approach}>
+                        {approach.map((paragraph) => (
+                            <p key={paragraph.slice(0, 24)} className="[&+p]:mt-4">
+                                {paragraph}
+                            </p>
+                        ))}
+                    </Story>
+                )}
+                {copy.result && (
+                    <Story label={labels.result}>
+                        <span className="text-txt-primary">{copy.result}</span>
+                    </Story>
+                )}
+                {copy.learning && <Story label={labels.learning}>{copy.learning}</Story>}
+            </dl>
+        </article>
     );
 }
 
 export default function ProjectsSection() {
-    const { t, language } = useTranslation();
-
-    const projectsData = PROJECTS.map((project, index) => {
-        const trans = t.projects ? t.projects[index] : null;
-        return {
-            ...project,
-            title: trans ? trans.title : project.title,
-            summary: trans ? trans.summary : project.summary,
-            impact: trans ? trans.impact : project.impact,
-            actionLabel: trans?.actionLabel || project.actionLabel,
-            discordUrl: project.id === 'crystal' ? CRYSTAL.discordUrl : undefined,
-        };
-    });
+    const { t } = useTranslation();
+    const labels = t.projectsSection;
 
     return (
-        <div className="space-y-6">
-            <SectionHeading
-                title={t.nav.projects}
-                description={
-                    language === 'en'
-                        ? 'Key software and development projects delivered.'
-                        : 'Projets clés en développement et logiciels livrés.'
-                }
-            />
+        <div>
+            <SectionHeading title={labels.title} description={labels.intro} />
 
-            <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6"
-            >
-                {projectsData.map((project) => (
-                    <ProjectCard
-                        key={project.id || project.title}
-                        project={project}
-                    />
-                ))}
-            </motion.div>
+            <div className="space-y-20 sm:space-y-28">
+                {PROJECTS.map((project, index) => {
+                    const copy = t.projects[project.id];
+                    if (!copy) return null;
+                    return (
+                        <ProjectCase
+                            key={project.id}
+                            project={project}
+                            copy={copy}
+                            labels={labels}
+                            featured={index === 0}
+                        />
+                    );
+                })}
+            </div>
         </div>
     );
 }

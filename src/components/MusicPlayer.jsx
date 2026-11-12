@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { FaPause, FaPlay, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { useTranslation } from '../contexts/LanguageContext';
+import { useHideOnScroll } from '../hooks/useHideOnScroll';
 
 export default function MusicPlayer() {
-    const { t } = useTranslation();
+    const { t, language } = useTranslation();
     const audioRef = useRef(null);
     const containerRef = useRef(null);
 
@@ -14,6 +15,7 @@ export default function MusicPlayer() {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [expanded, setExpanded] = useState(false);
+    const hideOnScroll = useHideOnScroll();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -101,18 +103,18 @@ export default function MusicPlayer() {
                 onPlay={() => setPlaying(true)}
             />
 
-            <motion.div
+            <m.div
                 ref={containerRef}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2, duration: 0.4 }}
-                className="fixed bottom-4 left-4 z-50 flex flex-col-reverse items-start gap-2"
+                className={`fixed bottom-4 left-4 z-50 flex flex-col-reverse items-start gap-2 floating-widget ${hideOnScroll && !expanded ? 'is-hidden' : ''}`}
             >
-                <motion.button
+                <m.button
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.96 }}
                     onClick={() => setExpanded((state) => !state)}
-                    className="crystal-card w-10 h-10 flex items-center justify-center transition-all"
+                    className="crystal-card w-11 h-11 flex items-center justify-center transition-all"
                     style={{
                         borderColor: playing ? 'var(--accent)' : 'var(--border-crystal)',
                         boxShadow: playing ? '0 0 12px var(--accent-glow)' : 'none'
@@ -129,11 +131,11 @@ export default function MusicPlayer() {
                     ) : (
                         <FaPlay className="text-[10px] text-txt-secondary ml-0.5" />
                     )}
-                </motion.button>
+                </m.button>
 
                 <AnimatePresence>
                     {expanded && (
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 8, scale: 0.96 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 8, scale: 0.96 }}
@@ -195,17 +197,17 @@ export default function MusicPlayer() {
                                 </div>
 
                                 <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-txt-muted">
-                                    <span>Contrôle rapide</span>
+                                    <span>{language === 'en' ? 'Shortcut' : 'Raccourci'}</span>
                                     <span className="inline-flex items-center gap-1.5 text-txt-secondary">
-                                        <kbd className="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[9px] font-mono text-txt-primary">Espace</kbd>
-                                        <span>{playing ? 'Couper' : 'Relancer'}</span>
+                                        <kbd className="px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[10px] font-mono text-txt-primary">M</kbd>
+                                        <span>{playing ? (language === 'en' ? 'Mute' : 'Couper') : (language === 'en' ? 'Play' : 'Relancer')}</span>
                                     </span>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
                 </AnimatePresence>
-            </motion.div>
+            </m.div>
         </>
     );
 }

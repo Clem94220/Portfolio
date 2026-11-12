@@ -1,92 +1,85 @@
-import { FaArrowRight } from 'react-icons/fa';
-import { CONTACT_LINKS, PROOF_LINKS } from '../data/portfolioData';
+import { FaArrowRight, FaDiscord, FaGithub } from 'react-icons/fa';
+import { CONTACT_LINKS, DISCORD_DM_URL, DISCORD_INVITE_CODE, PROOF_LINKS } from '../data/portfolioData';
+import { useDiscordInvite } from '../hooks/useDiscordInvite';
 import { useTranslation } from '../contexts/LanguageContext';
-import SectionHeading from './SectionHeading';
 import LinkIcon from './LinkIcon';
 
-function linkStyle(priority) {
-    if (priority === 'primary') {
-        return 'bg-white text-black border-transparent hover:brightness-95';
-    }
-    return 'bg-transparent text-txt-secondary border-white/15 hover:text-txt-primary hover:border-white/30';
-}
-
 export default function ContactSection() {
-    const { t } = useTranslation();
-    const isExternal = (url) => url.startsWith('http');
+    const { t, language } = useTranslation();
+    const { members, online } = useDiscordInvite(DISCORD_INVITE_CODE);
+    const fmt = (n) => n.toLocaleString(language === 'en' ? 'en-US' : 'fr-FR');
 
-    const translatedProofLinks = PROOF_LINKS.map(link => {
-        if (link.icon === 'project') {
-            return { ...link, label: t.profile.viewProjects };
-        }
-        return link;
-    });
+    const elsewhere = [
+        { label: 'GitHub', url: PROOF_LINKS.github, icon: 'github' },
+        ...CONTACT_LINKS.filter((link) => link.icon !== 'discord'),
+    ];
 
     return (
-        <div className="space-y-6">
-            <SectionHeading
-                title={t.contact.headingTitle}
-                description={t.contact.headingDesc}
-            />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-12">
+            <div className="lg:col-span-8">
+                <h2 className="type-h2 text-txt-primary max-w-[18ch]">{t.contact.title}</h2>
+                <p className="prose-body mt-6">{t.contact.text}</p>
 
-            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-4">
-                <article className="crystal-card p-6 sm:p-7 space-y-5">
-                    <div className="space-y-3">
-                        <h3 className="text-xl sm:text-2xl font-display font-semibold text-txt-primary">
-                            {t.contact.cardTitle}
-                        </h3>
-                        <p className="text-sm sm:text-base text-txt-secondary max-w-xl leading-relaxed">
-                            {t.contact.cardText}
-                        </p>
-                    </div>
-
+                <div className="mt-10 flex flex-wrap items-center gap-3">
                     <a
-                        href="https://discord.gg/evhpge7UCE"
+                        href={`https://discord.gg/${DISCORD_INVITE_CODE}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-white text-black px-5 py-3 text-sm font-semibold hover:brightness-95 transition-all"
+                        className="btn btn-primary"
                     >
+                        <FaDiscord aria-hidden />
                         {t.common.openDiscord}
-                        <FaArrowRight className="text-xs" />
+                        <FaArrowRight className="btn-arrow text-xs" aria-hidden />
                     </a>
+                    <a href={DISCORD_DM_URL} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                        {t.contact.dm}
+                    </a>
+                </div>
 
-                    <div className="flex flex-wrap gap-2">
-                        {CONTACT_LINKS.map((link) => (
+                {(members !== null || online !== null) && (
+                    <p className="type-data text-txt-muted mt-5">
+                        {online !== null && (
+                            <span className="inline-flex items-center gap-2 mr-5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" aria-hidden />
+                                {fmt(online)} {language === 'en' ? 'online' : 'en ligne'}
+                            </span>
+                        )}
+                        {members !== null && (
+                            <span>
+                                {fmt(members)} {language === 'en' ? 'members' : 'membres'}
+                            </span>
+                        )}
+                    </p>
+                )}
+            </div>
+
+            <div className="lg:col-span-4 lg:pt-3">
+                <h3 className="type-label mb-2">{t.contact.elsewhere}</h3>
+                <ul>
+                    {elsewhere.map((link) => (
+                        <li key={link.label} className="rule-top">
                             <a
-                                key={link.label}
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition-all ${linkStyle(link.priority)}`}
+                                className="group flex items-center justify-between gap-3 py-3.5 text-txt-secondary hover:text-txt-primary transition-colors"
                             >
-                                <LinkIcon name={link.icon} />
-                                {link.label}
-                            </a>
-                        ))}
-                    </div>
-                </article>
-
-                <article className="crystal-card p-6 space-y-3">
-                    <h3 className="text-sm uppercase tracking-[0.2em] font-display text-txt-secondary">{t.common.usefulLinks}</h3>
-                    <ul className="space-y-2">
-                        {translatedProofLinks.map((link) => (
-                            <li key={link.label}>
-                                <a
-                                    href={link.url}
-                                    target={isExternal(link.url) ? '_blank' : undefined}
-                                    rel={isExternal(link.url) ? 'noopener noreferrer' : undefined}
-                                    className="w-full inline-flex items-center justify-between gap-3 rounded-lg border border-white/12 px-3 py-2.5 text-sm text-txt-secondary hover:text-txt-primary hover:border-white/30 transition-colors"
-                                >
-                                    <span className="inline-flex items-center gap-2">
+                                <span className="inline-flex items-center gap-3">
+                                    {link.icon === 'github' ? (
+                                        <FaGithub aria-hidden className="text-sm" />
+                                    ) : (
                                         <LinkIcon name={link.icon} />
-                                        {link.label}
-                                    </span>
-                                    <FaArrowRight className="text-xs" />
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </article>
+                                    )}
+                                    {link.label}
+                                </span>
+                                <FaArrowRight
+                                    aria-hidden
+                                    className="text-[10px] -rotate-45 text-txt-muted transition-all duration-200 group-hover:text-accent-strong group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                />
+                            </a>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
